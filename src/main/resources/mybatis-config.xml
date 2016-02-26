@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <!-- 定义基本数据类型Mapping -->
+        <typeAlias alias="int" type="java.lang.Integer" />
+        <typeAlias alias="long" type="java.lang.Long" />
+        <typeAlias alias="float" type="java.lang.Float" />
+        <typeAlias alias="double" type="java.lang.Double" />
+        <typeAlias alias="boolean" type="java.lang.Boolean" />
+        <typeAlias alias="string" type="java.lang.String" />
+        <typeAlias alias="date" type="java.util.Date" />
+        <typeAlias alias="map" type="java.util.Map" />
+        <typeAlias alias="linkMap" type="java.util.LinkedHashMap" />
+        
+        <typeAlias type="com.cuit.admin.bean.AdminGrant" alias="adminGrant" />
+        <typeAlias type="com.cuit.admin.bean.AdminInfo" alias="adminBean" />
+        <typeAlias type="com.cuit.admin.bean.AdminMenu" alias="adminMenu" />
+        <typeAlias type="com.cuit.admin.bean.AdminRole" alias="adminRole" />
+    </typeAliases>
+</configuration>

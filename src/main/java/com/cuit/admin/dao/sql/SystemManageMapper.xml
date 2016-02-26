@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cuit.admin.dao.SystemManageDao">
+    <resultMap id="adminUserMap" class="adminBean">
+        <result property="userId" column="userId" />
+        <result property="userName" column="userName" />
+        <result property="userPass" column="userPass" />
+        <result property="email" column="email" />
+        <result property="active" column="active" />
+        <result property="createDate" column="createDate" />
+        <result property="updateDate" column="updateDate" />
+    </resultMap>
+    <insert id="addAdminUser" parameterType="adminBean">
+        <![CDATA[
+            insert into admin_user_info (
+                name,
+                password,
+                active,
+                email,
+                create_date
+            )
+            values (
+                #userName#,
+                #userPass#,
+                #active#,
+                #email#,
+                NOW()
+            )
+        ]]>
+        <selectKey resultType="int" keyProperty="userId">
+            <![CDATA[
+                select LAST_INSERT_ID()
+            ]]>
+        </selectKey>
+    </insert>
+    <select id="getAdminByUserName" resultMap="adminUserMap" parameterType="string">
+        <![CDATA[
+            select aui.id userId,
+                aui.name userName,
+                aui.active active,
+                aui.email email,
+                aui.password userPass,
+                aui.create_date createDate,
+                aui.update_date updateDate
+            from admin_user_info aui
+            where aui.name = #username#
+        ]]>
+    </select>
+    <select id="getAdminByUserId" resultMap="adminUserMap" parameterType="int">
+        <![CDATA[
+            select aui.id userId,
+                aui.name userName,
+                aui.active active,
+                aui.email email,
+                aui.password userPass,
+                aui.create_date createDate,
+                aui.update_date updateDate
+            from admin_user_info aui
+            where aui.id = #userId#
+        ]]>
+    </select>
+    <update id="updateAdminUser" parameterType="adminBean">
+        <![CDATA[
+            update admin_user_info
+            set password = #userPass#,
+                email = #email#,
+                active = #active#,
+                update_date = NOW()
+            where id = #userId#
+        ]]>
+    </update>
+    <!-- updateAdminRoles -->
+    <delete id="deleteAdminUserRoles" parameterType="adminBean">
+        <![CDATA[
+            delete from admin_user_role_relation
+            where user_no = #no#
+        ]]>
+    </delete>
+    <insert id="addAdminUserRoles" parameterType="adminBean">
+        <![CDATA[
+            insert into admin_user_role_relation (user_no, role_no)
+            values
+        ]]>
+        <iterate property="roles" conjunction=","> (#userId#, #roles[].no#) 
+        </iterate>
+    </insert>
+    <!-- ---- -->
+    <select id="getAdminUserList" resultMap="adminUserMap">
+        <![CDATA[
+            select aui.id userId,
+                aui.name userName,
+                aui.password userPass,
+                aui.active active,
+                aui.email email,
+                aui.create_date createDate,
+                aui.update_date updateDate
+            from admin_user_info aui
+            where aui.name like concat('%',trim(#keyWord#),'%')
+        ]]>
+    </select>
+    <select id="getAdminUserListCnt" resultType="int">
+        <![CDATA[
+            select count(*)
+            from admin_user_info aui
+            where aui.name like concat('%',trim(#keyWord#),'%')
+        ]]>
+    </select>
+    <resultMap class="adminMenu" id="adminMenuMap">
+        <result property="no" column="no" />
+        <result property="name" column="name" />
+        <result property="url" column="url" />
+        <result property="active" column="active" />
+        <result property="level" column="level" />
+        <result property="sequence" column="sequence" />
+        <result property="modelId" column="modelId" />
+        <result property="parentMenu.no" column="parent_no" />
+        <result property="createDate" column="createDate" />
+        <result property="updateDate" column="updateDate" />
+    </resultMap>
+    <insert id="addAdminMenu" parameterType="adminMenu">
+        <![CDATA[
+            insert into admin_menu_info (
+                name, url, active, level, sequence, parent_no, modelid, create_date, update_date
+            )
+            values (
+                #name#, #url#, #active#, #level#, #sequence#, #parentMenu.no#, #modelId# , NOW(), NOW()
+            )
+        ]]>
+        <selectKey resultType="long" keyProperty="no">
+            <![CDATA[
+                select LAST_INSERT_ID()
+            ]]>
+        </selectKey>
+    </insert>
+    <select id="getAdminMenu" parameterType="long" resultMap="adminMenuMap">
+        <![CDATA[
+            select ami.no  no,
+                   ami.name  name,
+                   ami.url  url,
+                   ami.active  active,
+                   ami.level  level,
+                   ami.modelid modelId,
+                   ami.sequence sequence,
+                   ami.parent_no  parent_no,
+                   ami.create_date createDate,
+                   ami.update_date updateDate
+            from admin_menu_info ami
+            where ami.no = #no#
+        ]]>
+    </select>
+    <update id="updateAdminMenu" parameterType="adminMenu">
+        <![CDATA[
+            update admin_menu_info
+            set name = #name#,
+                url = #url#,
+                active = #active#,
+                level = #level#,
+                modelid = #modelId#,
+                sequence = #sequence#,
+                parent_no = #parentMenu.no#,
+                update_date = NOW()
+            where no = #no#
+        ]]>
+    </update>
+    <select id="getAdminMenuList" parameterType="map" resultMap="adminMenuMap">
+        <![CDATA[
+            select ami.no  no,
+                   ami.name  name,
+                   ami.url  url,
+                   ami.active  active,
+                   ami.level  level,
+                   ami.sequence sequence,
+                   ami.modelid modelId,
+                   ami.parent_no  parent_no,
+                   ami.create_date createDate,
+                   ami.update_date updateDate
+            from admin_menu_info ami
+            where (
+                ami.name like concat('%',#keyWord#,'%')
+                or ami.url like concat('%',#keyWord#,'%')
+            )
+            order by ami.modelid, ami.level, ami.sequence
+        ]]>
+    </select>
+    <select id="getAdminMenuListCnt" parameterType="map" resultType="int">
+        <![CDATA[
+            select count(*)
+            from admin_menu_info ami
+            where (
+                ami.name like concat('%',#keyWord#,'%')
+                or ami.url like concat('%',#keyWord#,'%')
+            )
+        ]]>
+    </select>
+    <select id="getAllAdminMenus" resultMap="adminMenuMap">
+        <![CDATA[
+            select ami.no  no,
+                   ami.name  name,
+                   ami.url  url,
+                   ami.active  active,
+                   ami.level  level,
+                   ami.sequence sequence,
+                   ami.modelid modelId,
+                   ami.parent_no  parent_no,
+                   ami.create_date createDate,
+                   ami.update_date updateDate
+            from admin_menu_info ami
+            order by ami.modelid, ami.level, ami.sequence
+        ]]>
+    </select>
+    <select id="getAdminMenusByParentMenu" parameterType="adminMenu" resultMap="adminMenuMap">
+        <![CDATA[
+            select ami.no  no,
+                   ami.name  name,
+                   ami.url  url,
+                   ami.active  active,
+                   ami.level  level,
+                   ami.sequence sequence,
+                   ami.modelid modelId,
+                   ami.parent_no  parent_no,
+                   ami.create_date createDate,
+                   ami.update_date updateDate
+            from admin_menu_info ami
+            where ami.parent_no = #no#
+            order by ami.modelid, ami.level, ami.sequence
+        ]]>
+    </select>
+    <!-- 无 -->
+    <!-- <select id="getAdminMenusByParentMenuCnt" parameterType="adminMenu" resultType="int"> -->
+    <!-- <![CDATA[ -->
+    <!-- select count(*) -->
+    <!-- from admin_menu_info ami -->
+    <!-- where ami.parent_no = #no# -->
+    <!-- ]]> -->
+    <!-- </select> -->
+    <resultMap class="adminGrant" id="adminGrantMap">
+        <result property="active" column="active" />
+        <result property="view" column="view" />
+        <result property="create" column="create" />
+        <result property="update" column="update" />
+        <result property="delete" column="delete" />
+        <result property="adminMenu.no" column="no" />
+        <result property="adminMenu.name" column="name" />
+        <result property="adminMenu.url" column="url" />
+        <result property="adminMenu.active" column="menu_active" />
+        <result property="adminMenu.level" column="level" />
+        <result property="adminMenu.sequence" column="sequence" />
+        <result property="adminMenu.parentMenu.no" column="parent_no" />
+        <result property="adminMenu.createDate" column="createDate" />
+        <result property="adminMenu.updateDate" column="updateDate" />
+    </resultMap>
+    <select id="getAdminGrantsByRole" parameterType="adminRole" resultMap="adminGrantMap">
+        <![CDATA[
+            select ami.no  no,
+                   ami.name  name,
+                   ami.url  url,
+                   ami.active  menu_active,
+                   ami.level  level,
+                   ami.sequence sequence,
+                   ami.parent_no  parent_no,
+                   ami.create_date createDate,
+                   ami.update_date updateDate,
+                   armgv.active active,
+                   armgv.create 'create',
+                   armgv.view 'view',
+                   armgv.update 'update',
+                   armgv.delete 'delete'
+            from admin_menu_info ami
+            left join (select * from admin_role_menu_grant_view where role_no=#no#) armgv on armgv.menu_no = ami.no
+            order by ami.modelid, ami.level, ami.sequence
+        ]]>
+    </select>
+    <!-- updateAdminRoleGrants -->
+    <delete id="deleteAdminRoleGrants" parameterType="adminRole">
+        <![CDATA[
+            delete from admin_role_menu_grant
+            where role_no = #no#
+        ]]>
+    </delete>
+    <insert id="insertAdminRoleGrants" parameterType="adminRole">
+        <![CDATA[
+            insert into admin_role_menu_grant (`role_no`, `menu_no`, `view`, `create`, `update`, `delete`)
+            values
+        ]]>
+        <iterate conjunction="," property="grants"> (#no#, #grants[].adminMenu.no#, #grants[].view#, #grants[].create#, #grants[].update#, #grants[].delete#) 
+        </iterate>
+    </insert>
+    <!-- --- -->
+    <resultMap class="adminRole" id="adminRoleMap">
+        <result property="no" column="no" />
+        <result property="name" column="name" />
+        <result property="active" column="active" />
+        <result property="description" column="description" />
+        <result property="createDate" column="createDate" />
+        <result property="updateDate" column="updateDate" />
+    </resultMap>
+    <insert id="addAdminRole" parameterType="adminRole">
+        <![CDATA[
+            insert into admin_role_info (
+                name, active, description, create_date, update_date
+            )
+            values (
+                #name#, #active#, #description#, NOW(), NOW()
+            )
+        ]]>
+        <selectKey resultType="long" keyProperty="no">
+            <![CDATA[
+                select LAST_INSERT_ID()
+            ]]>
+        </selectKey>
+    </insert>
+    <select id="getAdminRole" resultMap="adminRoleMap" parameterType="long">
+        <![CDATA[
+            select ari.no  no,
+                   ari.name  name,
+                   ari.active active,
+                   ari.description description,
+                   ari.create_date  createDate,
+                   ari.update_date  updateDate
+            from admin_role_info ari
+            where ari.no = #no#
+        ]]>
+    </select>
+    <update id="updateAdminRole" parameterType="adminRole">
+        <![CDATA[
+            update admin_role_info
+            set name = #name#,
+                active = #active#,
+                description = #description#,
+                update_date = NOW()
+            where no = #no#
+        ]]>
+    </update>
+    <select id="getAllAdminRoles" resultMap="adminRoleMap">
+        <![CDATA[
+            select ari.no  no,
+                   ari.name  name,
+                   ari.active active,
+                   ari.description description,
+                   ari.create_date  createDate,
+                   ari.update_date  updateDate
+            from admin_role_info ari
+        ]]>
+    </select>
+    <select id="getAdminUserRoles" parameterType="adminBean" resultMap="adminRoleMap">
+        <![CDATA[
+            select ari.no  no,
+                   ari.name  name,
+                   ari.active active,
+                   ari.description description,
+                   ari.create_date  createDate,
+                   ari.update_date  updateDate
+            from admin_user_role_relation aurr
+            left join admin_role_info ari on aurr.role_no = ari.no
+            where aurr.user_no = #no#
+        ]]>
+    </select>
+    <!-- 无 -->
+    <!-- <select id="getAdminUserRolesCnt" parameterType="adminBean" resultType="int"> -->
+    <!-- <![CDATA[ -->
+    <!-- select count(*) -->
+    <!-- from admin_user_role_relation aurr -->
+    <!-- left join admin_role_info ari on aurr.role_no = ari.no -->
+    <!-- where aurr.user_no = #no# -->
+    <!-- ]]> -->
+    <!-- </select> -->
+    <select id="getAdminUsersByRole" parameterType="adminRole" resultMap="adminUserMap">
+        <![CDATA[
+            select aui.id userId,
+                aui.name userName,
+                aui.active active,
+                aui.email email,
+                aui.password userPass,
+                aui.create_date createDate,
+                aui.update_date updateDate
+            from admin_user_role_relation aurr
+            left join admin_user_info aui on aurr.user_no = aui.id
+            where aurr.role_no = #no#
+        ]]>
+    </select>
+    <select id="getAdminRoleList" parameterType="map" resultMap="adminRoleMap">
+        <![CDATA[
+            select ari.no  no,
+                   ari.name  name,
+                   ari.active active,
+                   ari.description description,
+                   ari.create_date  createDate,
+                   ari.update_date  updateDate
+            from admin_role_info ari
+            where (
+                ari.name like concat('%',#keyWord#,'%')
+            )
+        ]]>
+    </select>
+    <select id="getAdminRoleListCnt" parameterType="map" resultType="int">
+        <![CDATA[
+            select count(*)
+            from admin_role_info ari
+            where (
+                ari.name like concat('%',#keyWord#,'%')
+            )
+        ]]>
+    </select>
+</mapper>

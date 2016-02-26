@@ -1,0 +1,759 @@
+@CHARSET "UTF-8";
+html,body,div,li,ol,ul,dl,dt,dd,h1,h2,h3,h4,h5,h6,input,select,textarea,button,label {
+    margin: 0px;
+    padding: 0px;
+    border-width: 0px;
+    outline: none;
+    font-family: "微软雅黑";
+}
+a{
+    text-decoration: none;
+}
+html,body {
+    margin: 0px;
+    width: 100%;
+    height:100%;
+    font-size: 14px;
+}
+.flexigrid div.bDiv td h1,.flexigrid div.bDiv td p {
+    font-size: 14px;
+}
+/********************login page*****************************/
+#admin-login-background{
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 0px;
+}
+#logon-header{
+    position: relative;
+    display: block;
+    width: 1600px;
+    height: 70px;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 70px;
+    letter-spacing: 2px;
+    background-color: #49799c;
+    color: #ffffff;
+    margin: auto;
+    text-indent: 100px;
+    z-index: 2;
+}
+#admin-login-background > img{
+    z-index: 0;
+    width: 1600px;
+    height: auto;
+    margin: auto;
+    margin-left: 0px !important;
+    position: relative;
+    top: -50px;
+}
+#bottom-div {
+    width: 1600px;
+    height: 0px;
+    position: relative;
+    top: -120px;
+}
+#bottom-div img{
+    display: block;
+    margin: auto;
+    width: auto !important;
+    height: auto !important;
+}
+#bottom-div p{
+    text-align: center;
+    font-size: 14px;
+}
+#admin-login-info-div {
+    margin:auto;
+    width:400px;
+    height:250px;
+}
+#admin-login-info-div form {
+    display: block;
+    height:auto;
+    margin:auto;
+    padding-top:200px;
+    position: absolute;
+    left: 1000px;
+}
+#admin-login-info-div form h1{
+    font-size: 25px;
+    text-align: center;
+    color: #4ca9ea;
+    font-weight: normal;
+}
+#admin-login-info-div form input {
+    text-indent: 5px;
+    font-size: 16px;
+    color:gray;
+    width:280px;
+    height:38px;
+    line-height:38px;
+    display: block;
+    border: 1px solid #cccccc;
+    margin: auto;
+}
+#j_username{
+    border-bottom: none !important;
+    margin-top: 40px !important;
+    background-image: url("/resources/images/admin/user.png");
+    background-repeat: no-repeat;
+    background-position: 10px;
+    text-indent: 30px !important;
+}
+#j_password{
+    background-image: url("/resources/images/admin/password.png");
+    background-repeat: no-repeat;
+    background-position: 10px;
+    text-indent: 30px !important;
+}
+#admin-login-info-div form input[type=checkbox]{
+    width: auto;
+    position: relative;
+    float: left;
+    border: none;
+}
+#admin-login-info-div form label{
+    line-height: 35px;
+    margin-left: 5px;
+    color: #4ca9ea;
+}
+#admin-login-info-div form input[type=submit] {
+    margin-top: 25px;
+    width: 280px;
+    background-color: #4ca9ea;
+    text-align: center;
+    color: #ffffff;
+    border: solid 1px #cccccc;
+    border-radius: 5px;
+    line-height: 38px;
+    font-size: 18px;
+    font-weight: normal;
+}
+#admin-login-info-div form input[type=submit]:ACTIVE,
+#admin-login-info-div form input[type=submit]:HOVER {
+    color: #ffffff;
+}
+#admin-login-info-div form img {
+    position: relative;
+}
+#admin-login-info-div #message{
+    color: red;
+    text-align: center;
+}
+/********************home page*****************************/
+.main-body{
+    background-color: #ffffff;
+}
+#abs-admin
+{
+    position: absolute;
+    background-color: #F8F8F8; 
+    border-radius:4px;
+    border: 1px solid #D7D7D7;
+    height: 24px;
+    width: 70px;
+    display: none;
+    vertial-align:baseline;
+}
+#main_header
+{
+    width:100%;
+    height:60px;
+    border-bottom:4px solid #6699FF;
+    background-color: #E9E9E9;
+}
+#left-nav {
+    width:200px;
+    height:90%;
+    float:left;
+    overflow:hidden;
+    background-color: #f2f2f2;
+}
+.shift_icon
+{
+    vertical-align: middle;
+    margin-left:20px;
+    cursor: pointer;
+    height:21px;
+    width:21px;
+}
+.loginOut_img
+{
+    float:left;
+    height: 10px;
+    width: 12px;
+    margin: 7px 0 7px 10px;
+    border: none;
+}
+.level1-menu{
+    width:100%;
+    margin:0 auto;
+    height:70px;
+    line-height:70px;
+    font-size:20px;
+    color:#9a9999;
+    border-bottom: 1px solid #E1E1E1;
+    cursor:pointer;
+    border-top:2px solid #FBFBFB;
+}
+.selected-menu{
+    background-color: #f2f2f2;
+    border-bottom: solid 0px #e0e0e0;
+}
+.level1-menu:FIRST-CHILD{
+    border-top: solid 1px #e0e0e0;
+}
+.level1-menu label{
+    margin-left: 30px;
+    height:70px;
+    line-height:70px;
+}
+.level1-menu:hover{
+}
+.menu-arrow{
+    margin-left:-20px;
+    display: inline-block;
+    background-repeat: none;
+}
+.level1-menu .menu-arrow{
+    background-position:center;
+    background-image: url('/resources/images/admin/tree_hide.png');
+    width: 10px;
+    height: 16px;
+    background-repeat: no-repeat;
+    margin-top: 8px;
+}
+.selected-menu .menu-arrow{
+    background-image: url('/resources/images/admin/tree_show.png');
+    width: 10px;
+    height: 16px;
+    background-repeat: no-repeat;
+}
+.menuUl{
+    width:100%;
+    height: auto;
+    display:none;
+    margin-top:0px;
+}
+.level2-menu{
+    display:block;
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    text-indent:30px;
+    text-align: left;
+    font-family:"微软雅黑";
+    cursor: pointer;
+    color: #9a9999;
+    font-size: 18px;
+    list-style: none;
+    background-color: #f2f2f2;
+}
+.level2-menu:hover{
+    background-color: #ffffff;
+    color: #676767;
+    border-top: solid 0px #e0e0e0;
+    border-bottom: solid 0px #e0e0e0;
+}
+
+.header_left
+{
+    height:100%;
+    width:40%;
+    float:left;
+}
+.header_right
+{
+    height:100%;
+    width:40%;
+    float:right;
+}
+.left_part
+{
+    height:100%;
+    width:40%;
+}
+.s_userinfo
+{
+    height:27px;
+    display:inline-block;
+    vertical-align:middle;
+    border:1px solid #D7D7D7;
+    margin:0 25px 0 10px;
+    width:auto;
+    background-color: #F8F8F8;
+    border-radius: 4px;
+}
+.refresh_setcut
+{
+    height:100%;
+    width:60%;
+    text-align:right;
+    float:right;
+}
+#adminHeadImage
+{
+     vertical-align: middle;
+     margin: 0 2px 0 2px;
+     height: 20px;
+     width: 20px;
+     border: none;
+}
+
+#right-head-div #logout-div{
+    float: right;
+    margin-right: 40px;
+}
+#right-detail-div {
+    float: left;
+    height: 90%;
+}
+#right-detail-div iframe{
+    width: 100%;
+    height: 100%;
+    border: 0px;
+    display: block;
+    overflow: auto;
+}
+#messageContent{
+    position: absolute;
+    display: none;
+    background-color: white;
+    height: auto;
+    border: 1px solid #cccccc;
+}
+#messageContent ul, #messageContent li{
+    list-style: none;
+    display: block;
+    font-size: 16px;
+}
+/*******************************************************/
+#admin_body{
+    width: 95%;
+    margin :20px auto;
+}
+.chart{
+    width: 100%;
+    height: 100%;
+}
+#home_charts{
+    width: 100%;
+}
+#home_charts td{
+    width: 50%;
+    height: 300px;
+}
+.vertical_center
+{
+    vertical-align:middle;
+    display:inline-block;
+    height:100%;
+    width:0px;
+}
+/************************inner page*****************************/
+.manage-head{
+    width: 98%;
+    margin: auto;
+    height: auto;
+}
+.manage-body{
+    width: 98%;
+    height: auto;
+    margin: auto;
+}
+.addTabDiv {
+    display: none;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.tabTitle {
+    width: 100%;
+    height: 30px;
+    margin: 0 auto;
+    margin-top: 20px;
+    line-height: 30px;
+    text-indent: 30px;
+    color: black;
+    background-color: #e9e9e9;
+    font-size: 14px;
+}
+
+.main {
+    width: 98%;
+    margin: 0 auto;
+    height: 99%;
+    background-color: #ffffff;
+}
+
+.tabMain {
+    width: 100%;
+    height: 60px;
+    background-image: url("/resources/images/admin/tabMain_bg.gif");
+    border-bottom: 1px solid #e1e3e4;
+}
+.myTabs{
+    list-style: none;
+    display: inline-block;
+    height: 40px;
+    margin: 10px 10px;
+}
+.myTab{
+    display: inline-block;
+    height: 40px;
+    width: 100px;
+    font-size: 20px;
+    line-height: 40px;
+    text-align: center;
+    margin-right: 20px;
+    background-color: #00a0e9;
+    color: white;
+}
+.myTabs li:HOVER{
+    cursor: pointer;
+}
+.myLabel {
+    min-width: 100px;
+    display: inline-block;
+    text-align: right;
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 16px;
+}
+.myImage{
+    width: 120px;
+    height: 150px;
+}
+.myInput {
+    width: 200px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 16px;
+    box-shadow: 0px 0px 1px #333333;
+}
+.btnSubmit, .myButton {
+    border-radius: 3px;
+    display: inline;
+    width: 90px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    background-color: #4ca9ea;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    margin: 10px;
+    cursor: pointer;
+}
+.btnSubmit:HOVER, .myButton:HOVER {
+    background-color: #3b98d9;
+}
+.mySelect {
+    width: 200px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 16px;
+    box-shadow: 0px 0px 1px #333333;
+}
+.myRadio{
+    width: 16px;
+    height: 16px;
+}
+.myTitle {
+    width: 250px;
+    height: 20px;
+}
+.myTextArea {
+    box-shadow: 0px 0px 1px #333333;
+}
+.myStaticValue{
+    font-size: 16px;
+    height: 16px;
+}
+.buttons {
+    float: right;
+    height: 60px;
+    line-height: 60px;
+}
+.buttons .tabBtn {
+    float: right;
+    margin-top: 17px;
+    margin-right: 10px;
+}
+.tabBtn {
+    display: block;
+    width: 68px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    color: #2b2b2b;
+    background-image: url("/resources/images/admin/tabBtn.png");
+    cursor: pointer;
+}
+.tabBtn:hover {
+    background-image: url("/resources/images/admin/tabBtn02.png");
+}
+.menuBtn:hover {
+    background-image: url("/resources/images/admin/level2-menu.gif");
+}
+.myTable {
+    width: 98%;
+    margin: auto;
+    border: 1px solid #e1e3e4;
+    border-collapse: collapse;
+}
+.myTable tr {
+    height: 40px;
+}
+.myTable .tableTitle {
+    padding-right: 10px;
+    width: 15%;
+    text-align: right;
+}
+.myTable .tableValue {
+    padding-left: 10px;
+    width: 35%;
+}
+
+#imgView,#divNewPreview {
+    width: 466px;
+    height: 140px;
+    display: none;
+}
+
+.showTip {
+    color: #585858;
+    padding-left: 20px;
+}
+.howtogo {
+    width: 350px;
+    height: 90px;
+}
+.mustTag{
+    color: #ff0000;
+    font-size: 20px;
+    letter-spacing: 10px;
+}
+/*****************************/
+.bDiv h1{
+    font-size: 12px;
+    line-height: 15px;
+    display: inline;
+}
+.bDiv p{
+    font-size: 12px;
+    line-height: 15px;
+    display: inline;
+}
+
+/********************ext extention*******************************/
+.a_add {
+    background-image: url('/resources/images/admin/add_.png') !important;
+    background-repeat: no-repeat;
+}
+.a_edit {
+    background-image: url('/resources/images/admin/edit_.png') !important;
+    background-repeat: no-repeat;
+}
+.a_transition {
+    background-image: url('/resources/images/admin/transition.png')!important;
+    background-repeat: no-repeat;
+}
+.a_remove {
+    background-image: url('/resources/images/admin/delete_.png')!important;
+    background-repeat: no-repeat;
+}
+.a_refresh {
+    background-image: url('/resources/images/admin/refresh_.png')!important;
+    background-repeat: no-repeat;
+}
+.a_info {
+    background-image: url('/resources/images/admin/detail_.png')!important;
+    background-repeat: no-repeat;
+}
+.a_setting {
+    background-image: url('/resources/images/admin/setting_.png')!important;
+    background-repeat: no-repeat;
+}
+
+.a_print{
+    background-image: url('/resources/images/admin/print_.png')!important;
+    background-repeat: no-repeat;
+}
+
+.a_recycle {
+    background-image: url('/resources/images/admin/recycle.png')!important;
+    background-repeat: no-repeat;
+}
+
+.a_back {
+    background-image: url('/resources/images/admin/return_.png')!important;
+    background-repeat: no-repeat;
+}
+.a_date-list {
+    background-image: url('/resources/images/admin/data-list.png')!important;
+    background-repeat: no-repeat;
+}
+.a_chart-analyse {
+    background-image: url('/resources/images/admin/chart-analyse.png')!important;
+    background-repeat: no-repeat;
+}
+.a_recover {
+    background-image: url('/resources/images/admin/recover.png')!important;
+    background-repeat: no-repeat;
+}
+.nav {
+    background-image: url('/resources/css/ext4.2.1/images/shared/shadow-c.png');
+}
+/********************device gps*******************************/
+#map_containder{
+    height:100%;
+    width:80%;
+    float: left;
+}
+#map_selection{
+    height:100%;
+    width:20%;
+    float: left;
+}
+.illFilter{
+    margin-top: 20px;
+    list-style: none;
+    margin-left: 20px;
+}
+.filterTitle{
+    margin-left: 20px;
+    margin-top: 20px;
+    font-size: 20px;
+}
+.mapMessage{
+    width: 100%;
+}
+.mapMessage .detailLink{
+    margin-right: 20px;
+    float: right;
+}
+.mapMessage .headImage{
+    width: 35%;
+    height: 100%;
+}
+.mapMessage .headImage img{
+    width: 98%;
+    height: auto;
+    display: block;
+    marin: auto;
+}
+
+.menueImg
+{
+    width:15px;
+    height:15px;
+    margin:0 10px 0 15px;
+    vertical-align=middle; 
+}
+.menueRigtPrt
+{
+    height:100%;
+    width:20px;
+    float:right;
+}
+/*******************view device user***********************************/
+.tab-info{
+    width: 100%;
+}
+.healthdata_charts{
+    margin: auto;
+    width: 95%;
+}
+.healthdata_charts>thead td{
+    width: 50%;
+    text-align: center;
+    font-size: 20px;
+}
+.healthdata_charts .chart{
+    width: 100%;
+    height: 300px;
+}
+.healthdata-grid{
+    margin: auto;
+    width: 98%;
+    border:  1px solid #cccccc;
+}
+.healthdata-grid tr{
+    width: 100%;
+}
+.healthdata-grid td{
+    width: 20%;
+    text-align: center;
+}
+#healthdata-detail a{
+    margin-bottom: 20px;
+    float: left;
+    background-color: #00a0e9;
+    height: 50px;
+    width: 70px;
+    font-size: 14px;
+    font-family: "微软雅黑";
+    font-weight: normal;
+    line-height: 50px;
+    margin-left: 10px;
+    text-align: center;
+    color: #ffffff;
+}
+#healthdata-detail a:HOVER {
+    border: 1px solid #00a0ef;
+}
+
+.contactsInfo{
+    border: 1px solid #cccccc;
+    padding: 10px 15px;
+}
+.contactsInfo li{
+    list-style: none;
+    height: 30px;
+    text-align: left;
+    line-height: 30px;
+    font-size: 14px;
+}
+.contactsInfo li input[type=checkbox]{
+    size: 30px;
+    float: left;
+    height: 30px;
+}
+.contactsInfo li label{
+    line-height: 30px;
+    float: left;
+    margin-right: 15px;
+}
+.contactsInfo .contactsTitle{
+    color: #00a0e9;
+    height: 37px;
+    line-height: 37px;
+    font-size: 16px;
+}
+.contactsInfo .contactsTitle img{
+    height: 35px;
+    width: auto;
+    float: left;
+}
+/**************************edit service order********************************/
+#orderDetails{
+    margin: 0 5% 20px 5%;
+    width: 90%;
+    border: solid 1px #cccccc;
+}
+#orderDetails td{
+    text-align: center;
+}
+#orderDetails thead{
+    font-size: 14px;
+    font-weight: bold;
+}
+#orderDetails tbody{
+    font-size: 14px;
+}

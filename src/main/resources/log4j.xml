@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "/WEB-INF/tld/log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+    <!-- console appender -->
+    <appender name="Console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <param name="encoding" value="UTF-8"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%p [%C{1}:%M(%L)] %m%n" />
+        </layout>
+        <filter   class="org.apache.log4j.varia.LevelRangeFilter"> 
+            <param name="LevelMin" value="DEBUG"/>
+            <param name="LevelMax"   value="ERROR" />
+        </filter>
+    </appender>
+
+    <!-- file appender for debug level -->
+    <appender name="FileDebug" class="org.apache.log4j.RollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.base}/logs/SpringDemo/debug.log" />
+        <param name="MaxFileSize" value="10240KB" />
+        <param name="MaxBackupIndex" value="50" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] [%C:%M()] %p [%m]%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelMatchFilter">
+            <param name="LevelToMatch" value="DEBUG" />
+            <param name="AcceptOnMatch" value="TRUE" />
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter" />
+    </appender>
+
+    <!-- file appender for info level -->
+    <appender name="FileInfo" class="org.apache.log4j.RollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.base}/logs/SpringDemo/info.log" />
+        <param name="MaxFileSize" value="10240KB" />
+        <param name="MaxBackupIndex" value="50" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] [%C:%M()] %p [%m]%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelMatchFilter">
+            <param name="LevelToMatch" value="INFO" />
+            <param name="AcceptOnMatch" value="TRUE" />
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter" />
+    </appender>
+
+    <!-- file appender for info warn -->
+    <appender name="FileWarn" class="org.apache.log4j.RollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.base}/logs/SpringDemo/warn.log" />
+        <param name="MaxFileSize" value="10240KB" />
+        <param name="MaxBackupIndex" value="50" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] [%C:%M()] %p [%m]%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelMatchFilter">
+            <param name="LevelToMatch" value="WARN" />
+            <param name="AcceptOnMatch" value="TRUE" />
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter" />
+    </appender>
+
+    <!-- file appender for error level -->
+    <appender name="FileError" class="org.apache.log4j.RollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="${catalina.base}/logs/SpringDemo/error.log" />
+        <param name="MaxFileSize" value="10240KB" />
+        <param name="MaxBackupIndex" value="50" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss}] [%C:%M()] %p [%m]%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelMatchFilter">
+            <param name="LevelToMatch" value="DEBUG" />
+            <param name="AcceptOnMatch" value="TRUE" />
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter" />
+    </appender>
+
+    <logger name="com.cuit">
+        <level value="debug" />
+        <appender-ref ref="FileError" />
+    </logger>
+
+    <!-- ibatis logger -->
+    <logger name="com.ibatis">
+        <level value="debug" />
+        <appender-ref ref="FileError" />
+    </logger>
+
+    <!-- spring logger -->
+    <logger name="org.springframework">
+        <level value="error" />
+        <appender-ref ref="FileError" />
+    </logger>
+
+    <!-- root logger -->
+    <root>
+        <level value="error" />
+        <appender-ref ref="Console" />
+    </root>
+
+</log4j:configuration>
