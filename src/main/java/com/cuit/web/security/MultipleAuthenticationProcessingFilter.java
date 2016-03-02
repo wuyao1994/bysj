@@ -36,7 +36,6 @@ public class MultipleAuthenticationProcessingFilter extends AbstractAuthenticati
 
         username = username.trim();
         password = password.trim();
-        password = EncryptUtil.MD5Encode(password);
 
         AdminUserAuthenticationToken adminUserToken = new AdminUserAuthenticationToken(username, password);
         return this.getAuthenticationManager().authenticate(adminUserToken);

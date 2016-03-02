@@ -13,7 +13,6 @@
         <spring.version>3.0.5.RELEASE</spring.version>
         <tomcat.version>7.0.33</tomcat.version>
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
-        <ibatis.version>2.0.8</ibatis.version>
         <spring.security.core.version>3.0.4.RELEASE</spring.security.core.version>
     </properties>
     <!-- 依赖的jar包配置 -->
@@ -80,11 +79,6 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.ibatis</groupId>
-            <artifactId>com.springsource.com.ibatis</artifactId>
-            <version>2.3.4.726</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -262,12 +256,12 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-            <version>3.2.7</version>
+            <version>3.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
@@ -282,6 +276,21 @@
         </dependency>
     </dependencies>
     <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>*.*</include>
+                </includes>
+            </resource>
+        </resources>
         <finalName>bysj</finalName>
         <pluginManagement>
             <plugins>

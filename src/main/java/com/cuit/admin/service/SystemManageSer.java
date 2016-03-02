@@ -3,15 +3,15 @@ package com.cuit.admin.service;
 import java.util.List;
 import java.util.Map;
 
+
 import com.cuit.admin.bean.AdminGrant;
 import com.cuit.admin.bean.AdminInfo;
 import com.cuit.admin.bean.AdminMenu;
 import com.cuit.admin.bean.AdminRole;
-import com.cuit.admin.dao.SystemManageDao;
 import com.cuit.web.bean.PagerInfo;
 
 public interface SystemManageSer {
-    public void setSystemManageDao(SystemManageDao systemManageDao);
+//    public void setSystemManageDao(SystemManageDao systemManageDao);
 
     /****************************
      * user operate
@@ -31,6 +31,7 @@ public interface SystemManageSer {
     public List<AdminRole> getAdminUserRoles(AdminInfo adminUser) throws Exception;
 
     public List<AdminMenu> getAdminUserMenus(AdminInfo adminUser) throws Exception;
+    public AdminInfo getAdminByUserName(String userName) throws Exception;
 
     /**************************** menu operate ****************************/
     public void addAdminMenu(AdminMenu adminMenu) throws Exception;

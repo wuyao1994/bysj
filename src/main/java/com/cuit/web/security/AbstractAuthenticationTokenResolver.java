@@ -15,13 +15,11 @@ public abstract class AbstractAuthenticationTokenResolver implements Authenticat
         this.parameterName = parameterName;
     }
 
-    @Override
     public boolean support(HttpServletRequest request) {
         String parameterValue = request.getParameter(parameterName);
         return parameterValue.equals(this.parameterValue);
     }
 
-    @Override
     public abstract Authentication resolve(HttpServletRequest request);
 
     public void setParameterName(String parameterName) {

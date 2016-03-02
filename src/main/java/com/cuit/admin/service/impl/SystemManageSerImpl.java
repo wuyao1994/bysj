@@ -127,7 +127,11 @@ public class SystemManageSerImpl implements SystemManageSer {
         }
         return menus;
     }
-
+    @Override
+    public AdminInfo getAdminByUserName(String userName) throws Exception {
+        AdminInfo adminUser = this.systemManageDao.getAdminByUserName(userName);
+        return adminUser;
+    }
     @Override
     public void addAdminMenu(AdminMenu adminMenu) throws Exception {
         this.systemManageDao.addAdminMenu(adminMenu);

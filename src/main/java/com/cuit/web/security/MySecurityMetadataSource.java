@@ -13,20 +13,21 @@ import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.util.AntUrlPathMatcher;
+import org.springframework.security.web.util.RequestMatcher;
 import org.springframework.security.web.util.UrlMatcher;
 
 import com.cuit.admin.bean.AdminGrant;
 import com.cuit.admin.bean.AdminRole;
-import com.cuit.admin.dao.SystemManageDao;
+import com.cuit.admin.service.SystemManageSer;
 
 public class MySecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
     @Autowired
-    public SystemManageDao systemManageDao;
+    public SystemManageSer systemManageSer;
     private UrlMatcher urlMatcher = new AntUrlPathMatcher();
     private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
 
-    public MySecurityMetadataSource(SystemManageDao systemManageDao) {
-        this.systemManageDao = systemManageDao;
+    public MySecurityMetadataSource(SystemManageSer systemManageDao) {
+        this.systemManageSer = systemManageDao;
         try {
             loadResourceDefine();
         } catch (Exception e) {
@@ -35,7 +36,7 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
     }
 
     public void loadResourceDefine() throws Exception {
-        List<AdminRole> roles = systemManageDao.getAllAdminRoles();
+        List<AdminRole> roles = systemManageSer.getAllAdminRoles();
         /**
          * 应当是资源为key， 权限为value。 资源通常为url， 权限就是那些以ROLE_为前缀的角色。 一个资源可以由多个权限来访问。
          * sparta
@@ -45,14 +46,14 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
         for (AdminRole role : roles) {
             ConfigAttribute ca = new SecurityConfig(role.getName());
 
-            List<AdminGrant> grants = systemManageDao.getAdminGrantsByRole(role);
+            List<AdminGrant> grants = systemManageSer.getAdminGrantsByRole(role);
 
             for (AdminGrant grant : grants) {
-                if(grant.getActive() == null || !grant.getActive()){
+                if (grant.getActive() == null || !grant.getActive()) {
                     continue;
                 }
                 String url = grant.getAdminMenu().getUrl();
-                if(url == null || url.trim().equals("")){
+                if (url == null || url.trim().equals("")) {
                     continue;
                 }
                 /**
@@ -72,7 +73,6 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
         }
     }
 
-    @Override
     public Collection<ConfigAttribute> getAllConfigAttributes() {
         return null;
     }
@@ -94,7 +94,6 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
         return null;
     }
 
-    @Override
     public boolean supports(Class<?> arg0) {
         return true;
     }

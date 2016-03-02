@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cuit.admin.dao.SystemManageDao">
-    <resultMap id="adminUserMap" class="adminBean">
+    <resultMap id="adminUserMap" type="adminBean">
         <result property="userId" column="userId" />
         <result property="userName" column="userName" />
         <result property="userPass" column="userPass" />
@@ -81,10 +81,9 @@
             insert into admin_user_role_relation (user_no, role_no)
             values
         ]]>
-        <iterate property="roles" conjunction=","> (#userId#, #roles[].no#) 
-        </iterate>
+        <foreach collection="roles" item="role" separator=","> (#{userId}, #{role.no})
+        </foreach>
     </insert>
-    <!-- ---- -->
     <select id="getAdminUserList" resultMap="adminUserMap">
         <![CDATA[
             select aui.id userId,
@@ -105,7 +104,7 @@
             where aui.name like concat('%',trim(#keyWord#),'%')
         ]]>
     </select>
-    <resultMap class="adminMenu" id="adminMenuMap">
+    <resultMap type="adminMenu" id="adminMenuMap">
         <result property="no" column="no" />
         <result property="name" column="name" />
         <result property="url" column="url" />
@@ -178,8 +177,7 @@
             where (
                 ami.name like concat('%',#keyWord#,'%')
                 or ami.url like concat('%',#keyWord#,'%')
-            )
-            order by ami.modelid, ami.level, ami.sequence
+            ) order by ami.modelid, ami.level, ami.sequence
         ]]>
     </select>
     <select id="getAdminMenuListCnt" parameterType="map" resultType="int">
@@ -204,8 +202,7 @@
                    ami.parent_no  parent_no,
                    ami.create_date createDate,
                    ami.update_date updateDate
-            from admin_menu_info ami
-            order by ami.modelid, ami.level, ami.sequence
+            from admin_menu_info ami order by ami.modelid, ami.level, ami.sequence
         ]]>
     </select>
     <select id="getAdminMenusByParentMenu" parameterType="adminMenu" resultMap="adminMenuMap">
@@ -221,25 +218,17 @@
                    ami.create_date createDate,
                    ami.update_date updateDate
             from admin_menu_info ami
-            where ami.parent_no = #no#
-            order by ami.modelid, ami.level, ami.sequence
+            where ami.parent_no = #no# order by ami.modelid, ami.level, ami.sequence
         ]]>
     </select>
-    <!-- 无 -->
-    <!-- <select id="getAdminMenusByParentMenuCnt" parameterType="adminMenu" resultType="int"> -->
-    <!-- <![CDATA[ -->
-    <!-- select count(*) -->
-    <!-- from admin_menu_info ami -->
-    <!-- where ami.parent_no = #no# -->
-    <!-- ]]> -->
-    <!-- </select> -->
-    <resultMap class="adminGrant" id="adminGrantMap">
+    <resultMap type="adminGrant" id="adminGrantMap">
         <result property="active" column="active" />
         <result property="view" column="view" />
         <result property="create" column="create" />
         <result property="update" column="update" />
         <result property="delete" column="delete" />
         <result property="adminMenu.no" column="no" />
+        <result property="adminMenu.modelId" column="modelid"/>
         <result property="adminMenu.name" column="name" />
         <result property="adminMenu.url" column="url" />
         <result property="adminMenu.active" column="menu_active" />
@@ -268,7 +257,7 @@
             from admin_menu_info ami
             left join (select * from admin_role_menu_grant_view where role_no=#no#) armgv on armgv.menu_no = ami.no
             order by ami.modelid, ami.level, ami.sequence
-        ]]>
+            ]]>
     </select>
     <!-- updateAdminRoleGrants -->
     <delete id="deleteAdminRoleGrants" parameterType="adminRole">
@@ -282,11 +271,10 @@
             insert into admin_role_menu_grant (`role_no`, `menu_no`, `view`, `create`, `update`, `delete`)
             values
         ]]>
-        <iterate conjunction="," property="grants"> (#no#, #grants[].adminMenu.no#, #grants[].view#, #grants[].create#, #grants[].update#, #grants[].delete#) 
-        </iterate>
+        <foreach collection="grants" item="grants" separator=","> (#no#, #grants[].adminMenu.no#, #grants[].view#, #grants[].create#, #grants[].update#, #grants[].delete#)
+        </foreach>
     </insert>
-    <!-- --- -->
-    <resultMap class="adminRole" id="adminRoleMap">
+    <resultMap type="adminRole" id="adminRoleMap">
         <result property="no" column="no" />
         <result property="name" column="name" />
         <result property="active" column="active" />

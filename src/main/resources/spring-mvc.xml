@@ -13,11 +13,11 @@
         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
         http://www.springframework.org/schema/task
         http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+    <!-- 开启注解 -->
     <mvc:annotation-driven />
     <!-- 注解扫描包 告诉框架哪些类是使用注解的 -->
     <context:component-scan base-package="com.cuit" />
-    <!-- 开启注解 -->
-    
+<!--     <context:annotation-config />  -->
     <!-- view层返回处理，如controller中返回'error' 经过处理就是返回/error.jsp -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/view/"></property>

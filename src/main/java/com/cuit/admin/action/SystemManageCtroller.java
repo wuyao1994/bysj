@@ -34,11 +34,9 @@ import com.cuit.web.util.RequestSessionUtil;
 @RequestMapping(value = "/admin/system")
 public class SystemManageCtroller {
     Logger logger = Logger.getLogger(SystemManageCtroller.class);
-
     @Autowired
     private SystemManageSer systemManageSer;
 
-    @Autowired
     private MySecurityMetadataSource mySecurityMetadataSource;
 
     /**

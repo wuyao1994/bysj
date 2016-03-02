@@ -26,7 +26,6 @@ public class AdminUserAuthenticationToken extends AbstractAuthenticationToken{
         return adminInfo;
     }
 
-    @Override
     public Object getCredentials() {
         return null;
     }
@@ -47,7 +46,6 @@ public class AdminUserAuthenticationToken extends AbstractAuthenticationToken{
         }
     }
 
-    @Override
     public Object getPrincipal() {
         return adminInfo;
     }
