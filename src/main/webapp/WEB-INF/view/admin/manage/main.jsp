@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/resources/css/askmobile-admin.css" />
+<link rel="stylesheet" href="/resources/css/admin.css" />
 </head>
 <body class="main-body" style="overflow: hidden" >
     <div id="main_header">
@@ -35,12 +35,12 @@
     </div>
     <div id="left-nav">
     </div>
-    <div id="right-detail-div">
-        <iframe frameborder="0" name="detail-frame" id="detail-frame" src="/admin/manage/home"></iframe>
-    </div>
+<!--     <div id="right-detail-div"> -->
+<!--         <iframe frameborder="0" name="detail-frame" id="detail-frame" src="/admin/manage/home"></iframe> -->
+<!--     </div> -->
     <div id="messageContent">
     </div>
-    <script src="/resources/scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="/resources/script/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         var widthWhole = document.body.offsetWidth;
         console.log(widthWhole);
