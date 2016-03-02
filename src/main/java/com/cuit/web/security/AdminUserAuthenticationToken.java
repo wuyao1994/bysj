@@ -12,16 +12,20 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import com.cuit.admin.bean.AdminInfo;
 import com.cuit.admin.bean.AdminRole;
 
-public class AdminUserAuthenticationToken extends AbstractAuthenticationToken{
+public class AdminUserAuthenticationToken extends AbstractAuthenticationToken {
+    private static final long serialVersionUID = 1L;
     private AdminInfo adminInfo = new AdminInfo();
+
     public AdminUserAuthenticationToken(String account, String password) {
         super(null);
         this.adminInfo.setUserName(account);
         this.adminInfo.setUserPass(password);
     }
+
     public void setAdminInfo(AdminInfo adminInfo) {
         this.adminInfo = adminInfo;
     }
+
     public AdminInfo getAdminInfo() {
         return adminInfo;
     }
@@ -32,11 +36,11 @@ public class AdminUserAuthenticationToken extends AbstractAuthenticationToken{
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        if(this.isAuthenticated()){
+        if (this.isAuthenticated()) {
             List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
             List<AdminRole> roles = this.getAdminInfo().getRoles();
-            if(roles != null){
-                for(AdminRole role: roles){
+            if (roles != null) {
+                for (AdminRole role : roles) {
                     authList.add(new GrantedAuthorityImpl(role.getName()));
                 }
             }

@@ -20,10 +20,10 @@
                 create_date
             )
             values (
-                #userName#,
-                #userPass#,
-                #active#,
-                #email#,
+                #{userName},
+                #{userPass},
+                #{active},
+                #{email},
                 NOW()
             )
         ]]>
@@ -43,7 +43,7 @@
                 aui.create_date createDate,
                 aui.update_date updateDate
             from admin_user_info aui
-            where aui.name = #username#
+            where aui.name = #{username}
         ]]>
     </select>
     <select id="getAdminByUserId" resultMap="adminUserMap" parameterType="int">
@@ -56,24 +56,24 @@
                 aui.create_date createDate,
                 aui.update_date updateDate
             from admin_user_info aui
-            where aui.id = #userId#
+            where aui.id = #{userId}
         ]]>
     </select>
     <update id="updateAdminUser" parameterType="adminBean">
         <![CDATA[
             update admin_user_info
-            set password = #userPass#,
-                email = #email#,
-                active = #active#,
+            set password = #{userPass},
+                email = #{email},
+                active = #{active},
                 update_date = NOW()
-            where id = #userId#
+            where id = #{userId}
         ]]>
     </update>
     <!-- updateAdminRoles -->
     <delete id="deleteAdminUserRoles" parameterType="adminBean">
         <![CDATA[
             delete from admin_user_role_relation
-            where user_no = #no#
+            where user_no = #{no}
         ]]>
     </delete>
     <insert id="addAdminUserRoles" parameterType="adminBean">
@@ -94,14 +94,14 @@
                 aui.create_date createDate,
                 aui.update_date updateDate
             from admin_user_info aui
-            where aui.name like concat('%',trim(#keyWord#),'%')
+            where aui.name like concat('%',trim(#{keyWord}),'%')
         ]]>
     </select>
     <select id="getAdminUserListCnt" resultType="int">
         <![CDATA[
             select count(*)
             from admin_user_info aui
-            where aui.name like concat('%',trim(#keyWord#),'%')
+            where aui.name like concat('%',trim(#{keyWord}),'%')
         ]]>
     </select>
     <resultMap type="adminMenu" id="adminMenuMap">
@@ -122,7 +122,7 @@
                 name, url, active, level, sequence, parent_no, modelid, create_date, update_date
             )
             values (
-                #name#, #url#, #active#, #level#, #sequence#, #parentMenu.no#, #modelId# , NOW(), NOW()
+                #{name}, #{url}, #{active}, #{level}, #{sequence}, #{parentMenu.no}, #{modelId} , NOW(), NOW()
             )
         ]]>
         <selectKey resultType="long" keyProperty="no">
@@ -144,21 +144,21 @@
                    ami.create_date createDate,
                    ami.update_date updateDate
             from admin_menu_info ami
-            where ami.no = #no#
+            where ami.no = #{no}
         ]]>
     </select>
     <update id="updateAdminMenu" parameterType="adminMenu">
         <![CDATA[
             update admin_menu_info
-            set name = #name#,
-                url = #url#,
-                active = #active#,
-                level = #level#,
-                modelid = #modelId#,
-                sequence = #sequence#,
-                parent_no = #parentMenu.no#,
+            set name = #{name},
+                url = #{url},
+                active = #{active},
+                level = #{level},
+                modelid = #{modelId},
+                sequence = #{sequence},
+                parent_no = #{parentMenu.no},
                 update_date = NOW()
-            where no = #no#
+            where no = #{no}
         ]]>
     </update>
     <select id="getAdminMenuList" parameterType="map" resultMap="adminMenuMap">
@@ -175,8 +175,8 @@
                    ami.update_date updateDate
             from admin_menu_info ami
             where (
-                ami.name like concat('%',#keyWord#,'%')
-                or ami.url like concat('%',#keyWord#,'%')
+                ami.name like concat('%',#{keyWord},'%')
+                or ami.url like concat('%',#{keyWord},'%')
             ) order by ami.modelid, ami.level, ami.sequence
         ]]>
     </select>
@@ -185,8 +185,8 @@
             select count(*)
             from admin_menu_info ami
             where (
-                ami.name like concat('%',#keyWord#,'%')
-                or ami.url like concat('%',#keyWord#,'%')
+                ami.name like concat('%',#{keyWord},'%')
+                or ami.url like concat('%',#{keyWord},'%')
             )
         ]]>
     </select>
@@ -218,7 +218,7 @@
                    ami.create_date createDate,
                    ami.update_date updateDate
             from admin_menu_info ami
-            where ami.parent_no = #no# order by ami.modelid, ami.level, ami.sequence
+            where ami.parent_no = #{no} order by ami.modelid, ami.level, ami.sequence
         ]]>
     </select>
     <resultMap type="adminGrant" id="adminGrantMap">
@@ -255,7 +255,7 @@
                    armgv.update 'update',
                    armgv.delete 'delete'
             from admin_menu_info ami
-            left join (select * from admin_role_menu_grant_view where role_no=#no#) armgv on armgv.menu_no = ami.no
+            left join (select * from admin_role_menu_grant_view where role_no=#{no}) armgv on armgv.menu_no = ami.no
             order by ami.modelid, ami.level, ami.sequence
             ]]>
     </select>
@@ -263,7 +263,7 @@
     <delete id="deleteAdminRoleGrants" parameterType="adminRole">
         <![CDATA[
             delete from admin_role_menu_grant
-            where role_no = #no#
+            where role_no = #{no}
         ]]>
     </delete>
     <insert id="insertAdminRoleGrants" parameterType="adminRole">
@@ -271,7 +271,7 @@
             insert into admin_role_menu_grant (`role_no`, `menu_no`, `view`, `create`, `update`, `delete`)
             values
         ]]>
-        <foreach collection="grants" item="grants" separator=","> (#no#, #grants[].adminMenu.no#, #grants[].view#, #grants[].create#, #grants[].update#, #grants[].delete#)
+        <foreach collection="grants" item="grants" separator=","> (#{no}, #{grants[].adminMenu.no}, #{grants[].view}, #{grants[].create}, #{grants[].update}, #{grants[].delete})
         </foreach>
     </insert>
     <resultMap type="adminRole" id="adminRoleMap">
@@ -288,7 +288,7 @@
                 name, active, description, create_date, update_date
             )
             values (
-                #name#, #active#, #description#, NOW(), NOW()
+                #{name}, #{active}, #{description}, NOW(), NOW()
             )
         ]]>
         <selectKey resultType="long" keyProperty="no">
@@ -306,17 +306,17 @@
                    ari.create_date  createDate,
                    ari.update_date  updateDate
             from admin_role_info ari
-            where ari.no = #no#
+            where ari.no = #{no}
         ]]>
     </select>
     <update id="updateAdminRole" parameterType="adminRole">
         <![CDATA[
             update admin_role_info
-            set name = #name#,
-                active = #active#,
-                description = #description#,
+            set name = #{name},
+                active = #{active},
+                description = #{description},
                 update_date = NOW()
-            where no = #no#
+            where no = #{no}
         ]]>
     </update>
     <select id="getAllAdminRoles" resultMap="adminRoleMap">
@@ -340,7 +340,7 @@
                    ari.update_date  updateDate
             from admin_user_role_relation aurr
             left join admin_role_info ari on aurr.role_no = ari.no
-            where aurr.user_no = #no#
+            where aurr.user_no = #{no}
         ]]>
     </select>
     <!-- 无 -->
@@ -363,7 +363,7 @@
                 aui.update_date updateDate
             from admin_user_role_relation aurr
             left join admin_user_info aui on aurr.user_no = aui.id
-            where aurr.role_no = #no#
+            where aurr.role_no = #{no}
         ]]>
     </select>
     <select id="getAdminRoleList" parameterType="map" resultMap="adminRoleMap">
@@ -376,7 +376,7 @@
                    ari.update_date  updateDate
             from admin_role_info ari
             where (
-                ari.name like concat('%',#keyWord#,'%')
+                ari.name like concat('%',#{keyWord},'%')
             )
         ]]>
     </select>
@@ -385,7 +385,7 @@
             select count(*)
             from admin_role_info ari
             where (
-                ari.name like concat('%',#keyWord#,'%')
+                ari.name like concat('%',#{keyWord},'%')
             )
         ]]>
     </select>
