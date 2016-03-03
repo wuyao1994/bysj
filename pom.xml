@@ -10,7 +10,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <cxf.version>2.7.1</cxf.version>
-        <spring.version>3.0.5.RELEASE</spring.version>
+        <spring.version>3.2.6.RELEASE</spring.version>
         <tomcat.version>7.0.33</tomcat.version>
         <tomcat.plugin.version>2.2</tomcat.plugin.version>
         <spring.security.core.version>3.0.4.RELEASE</spring.security.core.version>
@@ -23,6 +23,11 @@
             <version>${spring.security.core.version}</version>
             <type>jar</type>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ibatis</groupId>
+            <artifactId>com.springsource.com.ibatis</artifactId>
+            <version>2.3.4.726</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>

@@ -5,26 +5,38 @@ package com.cuit.web.bean;
  * @author Mx
  *
  */
-public class PagerInfo {
+public class PagerInfo{
     /**
      * 每页数量
      */
-    int size;
+    Integer size;
     /**
      * 页码
      */
-    int page;
-    public int getSize() {
+    Integer page;
+    Long total;
+    public Integer getSize() {
         return size;
     }
-    public void setSize(int size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
-    public int getPage() {
+    public Integer getPage() {
         return page;
     }
-    public void setPage(int page) {
+    public void setPage(Integer page) {
         this.page = page;
     }
-    
+    public Long getTotal() {
+        return total;
+    }
+    public void setTotal(Long total) {
+        this.total = total;
+    }
+    public Boolean supportPage() {
+        if (this.size == null || this.page == null) {
+            return false;
+        }
+        return true;
+    }
 }

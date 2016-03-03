@@ -35,12 +35,12 @@
     </div>
     <div id="left-nav">
     </div>
-<!--     <div id="right-detail-div"> -->
-<!--         <iframe frameborder="0" name="detail-frame" id="detail-frame" src="/admin/manage/home"></iframe> -->
-<!--     </div> -->
+    <div id="right-detail-div">
+        <iframe frameborder="0" name="detail-frame" id="detail-frame" src="/admin/system/updatePassword"></iframe>
+    </div>
     <div id="messageContent">
     </div>
-    <script src="/resources/script/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="/resources/scripts/jquery-1.7.2.min.js" type="text/javascript" ></script>
     <script type="text/javascript">
         var widthWhole = document.body.offsetWidth;
         console.log(widthWhole);

@@ -5,8 +5,8 @@
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 <title>登录</title>
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-<script src="/resources/script/jquery-1.7.2.min.js"></script>
-<script src="/resources/script/bootstrap.min.js"></script>
+<script src="/resources/scripts/jquery-1.7.2.min.js"></script>
+<script src="/resources/scripts/bootstrap.min.js"></script>
 </head>
 <body background="/resources/images/icon1.jpg" style="text-align: center;">
     <h1 style="color: white;">基于zigbee的全球可控制智能楼宇电力节能管理系统</h1>
