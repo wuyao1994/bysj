@@ -1,12 +1,13 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ page isELIgnored ="false" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>服务订单</title>
 <link href="/resources/css/ext4.2.1/ext-theme-classic-all.css" rel="stylesheet" type="text/css" />
-<link href="/resources/css/askmobile-admin.css" rel="stylesheet" type="text/css" />
+<link href="/resources/css/admin.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div id="form-div">
@@ -39,7 +40,7 @@
 
     <script src="/resources/scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="/resources/scripts/ext4.2.1/ext-all.js" type="text/javascript" ></script>
-    <script src="/resources/scripts/askmobile/viewAdminGrants.js" type="text/javascript"></script>
+    <script src="/resources/scripts/admin/viewAdminGrants.js" type="text/javascript"></script>
     <script type="text/javascript">
         Ext.onReady(function(){
             var no = '${no}';

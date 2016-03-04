@@ -1,12 +1,13 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ page isELIgnored ="false" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>编辑系统用户</title>
 <link href="/resources/css/ext4.2.1/ext-theme-classic-all.css" rel="stylesheet" type="text/css" />
-<link href="/resources/css/askmobile-admin.css" rel="stylesheet" type="text/css" />
+<link href="/resources/css/admin.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div style="padding: 40px">

@@ -46,7 +46,7 @@
             where aui.name = #{username}
         ]]>
     </select>
-    <select id="getAdminByUserId" resultMap="adminUserMap" parameterType="int">
+    <select id="getAdminByUserId" resultMap="adminUserMap" parameterType="long">
         <![CDATA[
             select aui.id userId,
                 aui.name userName,

@@ -19,7 +19,6 @@
             <bean class="com.cuit.web.util.PagerArgumentResolver" />
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
-<!--     <mvc:annotation-driven /> -->
     <!-- 注解扫描包 告诉框架哪些类是使用注解的 -->
     <context:component-scan base-package="com.cuit" />
     <!-- <context:annotation-config /> -->

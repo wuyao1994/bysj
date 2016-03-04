@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>
 <link href="/resources/css/ext4.2.1/ext-theme-classic-all.css" rel="stylesheet" type="text/css" />
-<link href="/resources/css/askmobile-admin.css" rel="stylesheet" type="text/css" />
+<link href="/resources/css/admin.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div class="manage-head">
