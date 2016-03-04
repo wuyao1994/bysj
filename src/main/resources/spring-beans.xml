@@ -14,7 +14,6 @@
     <!-- 启动包扫描功能,以便注册带有@Controller等注解的类成为spring的bean  -->
     <context:component-scan base-package="com.cuit" />
     <context:annotation-config />
-    <!-- <mvc:annotation-driven /> -->
     <!-- 引入配置文件 -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:jdbc.properties" />
@@ -39,7 +38,16 @@
                 <value>classpath*:com/cuit/admin/dao/sql/*Mapper.xml</value>
             </list>
         </property>
+<!--     <property name="plugins"> -->
+<!--         <bean class="com.siping.web.limit.MybatisPageInterceptor" /> -->
+<!--     </property> -->
     </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.cuit.admin.dao" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+    
     <!-- 事务配置 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
@@ -57,8 +65,4 @@
         <aop:pointcut id="pointcut" expression="execution(* com.cuit..service..*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
     </aop:config>
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.cuit.admin.dao" />
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
-    </bean>
 </beans>

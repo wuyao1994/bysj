@@ -13,23 +13,25 @@
         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
         http://www.springframework.org/schema/task
         http://www.springframework.org/schema/task/spring-task-3.0.xsd">
-    <!-- 开启注解 -->
+    <!-- 启动注解驱动的Spring MVC功能,注册请求url和注解POJO类方法的映射 -->
+<!--     <mvc:annotation-driven> -->
+<!--         <mvc:argument-resolvers> -->
+<!--             <bean class="com.siping.web.util.PagerArgumentResolver" /> -->
+<!--         </mvc:argument-resolvers> -->
+<!--     </mvc:annotation-driven> -->
     <mvc:annotation-driven />
     <!-- 注解扫描包 告诉框架哪些类是使用注解的 -->
     <context:component-scan base-package="com.cuit" />
-<!--     <context:annotation-config />  -->
+    <!-- <context:annotation-config /> -->
     <!-- view层返回处理，如controller中返回'error' 经过处理就是返回/error.jsp -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/view/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
-    
     <mvc:resources mapping="/resources/**" location="/resources/" />
-    
     <!-- 默认首页 -->
     <mvc:view-controller path="/" view-name="/admin/login" />
     <mvc:view-controller path="/admin" view-name="/admin/login" />
-    
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="utf-8" />
         <property name="maxUploadSize" value="10485760000" />
