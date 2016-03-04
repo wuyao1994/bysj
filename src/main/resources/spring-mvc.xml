@@ -10,16 +10,16 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
         http://www.springframework.org/schema/task
         http://www.springframework.org/schema/task/spring-task-3.0.xsd">
     <!-- 启动注解驱动的Spring MVC功能,注册请求url和注解POJO类方法的映射 -->
-<!--     <mvc:annotation-driven> -->
-<!--         <mvc:argument-resolvers> -->
-<!--             <bean class="com.siping.web.util.PagerArgumentResolver" /> -->
-<!--         </mvc:argument-resolvers> -->
-<!--     </mvc:annotation-driven> -->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean class="com.cuit.web.util.PagerArgumentResolver" />
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+<!--     <mvc:annotation-driven /> -->
     <!-- 注解扫描包 告诉框架哪些类是使用注解的 -->
     <context:component-scan base-package="com.cuit" />
     <!-- <context:annotation-config /> -->

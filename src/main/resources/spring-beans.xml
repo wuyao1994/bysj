@@ -38,9 +38,9 @@
                 <value>classpath*:com/cuit/admin/dao/sql/*Mapper.xml</value>
             </list>
         </property>
-<!--     <property name="plugins"> -->
-<!--         <bean class="com.siping.web.limit.MybatisPageInterceptor" /> -->
-<!--     </property> -->
+    <property name="plugins">
+        <bean class="com.cuit.web.limit.MybatisPageInterceptor" />
+    </property>
     </bean>
     
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
