@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ page isELIgnored ="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,11 +25,9 @@
                         <span style="margin-right: 20px;"><sec:authentication property="principal.userName" /></span>
                     </a>
                     <div id="abs-admin">
-                    <a href="/admin/logout">
-                        <span class="vertical_center"></span>
-                        <img class="loginOut_img" src="/resources/images/icon_qiut.png" /><span style="margin-right:10px;">退出</span>
-                    </a>
-                </div>
+                        <a href="/admin/logout"> <span class="vertical_center"></span> <img class="loginOut_img" src="/resources/images/icon_qiut.png" /><span style="margin-right: 10px;">退出</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,7 +125,14 @@
                 $('#left-nav').html(htmlMenus);
             });
         }
-        
+        $(".s_userinfo.admin-show-hid").live("click",function(){
+            if($("#abs-admin").css("display")=='none'){
+                $("#abs-admin").show();
+                }
+            else{
+                $("#abs-admin").hide();
+                }
+        })
         $(".shift_icon").click(function(){
             if($("#left-nav").css("display")=="none"){
                 $("#left-nav").show('200');

@@ -14,6 +14,7 @@ import com.cuit.admin.bean.AdminGrant;
 import com.cuit.admin.bean.AdminInfo;
 import com.cuit.admin.bean.AdminRole;
 import com.cuit.admin.service.SystemManageSer;
+import com.cuit.web.util.EncryptUtil;
 
 public class AdminUserAuthenticationProvider implements AuthenticationProvider {
     @Autowired
@@ -33,7 +34,7 @@ public class AdminUserAuthenticationProvider implements AuthenticationProvider {
         if (resultUser == null) {
             throw new AuthenticationCredentialsNotFoundException("UserName does not exist!");
         }
-        if (!resultUser.getUserPass().equals(adminUser.getUserPass())) {
+        if (!resultUser.getUserPass().equals(EncryptUtil.MD5Encode(adminUser.getUserPass()))) {
             throw new AuthenticationCredentialsNotFoundException("Password does not match!");
         }
         if (!resultUser.getActive()) {
