@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2016-03-04 09:50:41
+Date: 2016-03-08 09:49:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -88,6 +88,7 @@ INSERT INTO `admin_role_menu_grant` VALUES ('1', '4', '1', null, null, null);
 INSERT INTO `admin_role_menu_grant` VALUES ('1', '5', '1', null, null, null);
 INSERT INTO `admin_role_menu_grant` VALUES ('1', '6', '1', null, null, null);
 INSERT INTO `admin_role_menu_grant` VALUES ('1', '7', '1', null, null, null);
+INSERT INTO `admin_role_menu_grant` VALUES ('2', '1', '1', null, null, null);
 INSERT INTO `admin_role_menu_grant` VALUES ('2', '2', '1', null, null, null);
 INSERT INTO `admin_role_menu_grant` VALUES ('2', '4', '1', null, null, null);
 INSERT INTO `admin_role_menu_grant` VALUES ('2', '7', '1', null, null, null);
@@ -105,12 +106,13 @@ CREATE TABLE `admin_user_info` (
   `email` varchar(45) DEFAULT 'ROLE_ADMIN',
   `active` int(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_user_info
 -- ----------------------------
-INSERT INTO `admin_user_info` VALUES ('1', 'admin', 'admin', '2016-02-26', '2016-02-16', 'yao.wu@sipingsoft.com', '1');
+INSERT INTO `admin_user_info` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '2016-02-26', '2016-03-07', 'yao.wu@sipingsoft.com', '1');
+INSERT INTO `admin_user_info` VALUES ('2', 'user', 'e10adc3949ba59abbe56e057f20f883e', '2016-03-07', null, 'user@163.com', '1');
 
 -- ----------------------------
 -- Table structure for admin_user_role_relation
@@ -126,6 +128,7 @@ CREATE TABLE `admin_user_role_relation` (
 -- Records of admin_user_role_relation
 -- ----------------------------
 INSERT INTO `admin_user_role_relation` VALUES ('1', '1');
+INSERT INTO `admin_user_role_relation` VALUES ('2', '2');
 
 -- ----------------------------
 -- View structure for admin_role_menu_grant_view
