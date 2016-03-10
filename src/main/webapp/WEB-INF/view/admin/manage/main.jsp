@@ -35,7 +35,7 @@
     <div id="left-nav">
     </div>
     <div id="right-detail-div">
-        <iframe frameborder="0" name="detail-frame" id="detail-frame" src="/admin/system/updatePassword"></iframe>
+        <iframe frameborder="0" name="detail-frame" id="detail-frame" src="/zigbee/viewSensorMonitor"></iframe>
     </div>
     <div id="messageContent">
     </div>

@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+
+.viewZigbee {
+    width: 1300px;
+    height: 400px
+}
+
+.viewZigbee table tr td {
+    width: 650px;
+    height: 200px
+}
+.viewZigbee table tr td span{
+    text-align:center;
+}
+.viewZigbee table tr td img{
+    display: block;
+    height: auto;
+    margin: 10px auto;
+    width: 50%;
+}
