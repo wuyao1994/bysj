@@ -6,9 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cuit.web.util.RequestSessionUtil;
+import com.cuit.zigbee.main.Test;
 
 @Controller
 @RequestMapping(value = "/zigbee")
@@ -23,5 +25,12 @@ public class ZigbeeController {
     @RequestMapping(value = "/{pageName}", method = RequestMethod.GET)
     public ModelAndView viewAdminPages(HttpServletRequest request, @PathVariable("pageName") String pageName) throws Exception {
         return new ModelAndView("/zigbee/" + pageName, RequestSessionUtil.getRequestParamData(request));
+    }
+    @RequestMapping(value = "/changeStatu",method = RequestMethod.POST)
+    public void LightNoOrOff(HttpServletRequest request, @RequestParam("id") int id, @RequestParam("statu") int statu) {
+        String message = id + "&" + statu;
+        Test test = new Test();
+        test.openSerialPort(message);
+        test.close();
     }
 }

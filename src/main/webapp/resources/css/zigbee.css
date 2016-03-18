@@ -9,10 +9,13 @@
     width: 650px;
     height: 200px
 }
-.viewZigbee table tr td span{
-    text-align:center;
+
+.viewZigbee table tr td span {
+    margin-left: 160px;
+    text-align: center;
 }
-.viewZigbee table tr td img{
+
+.viewZigbee table tr td img {
     display: block;
     height: auto;
     margin: 10px auto;
