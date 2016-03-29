@@ -1,15 +1,5 @@
 package com.cuit.zigbee.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Observable;
-import java.util.TooManyListenersException;
-
-import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
@@ -18,328 +8,145 @@ import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException;
 
-public class SerialReader extends Observable implements Runnable, SerialPortEventListener {
-    static CommPortIdentifier portId;
-    int delayRead = 100;
-    int numBytes; // buffer中的实际数据字节数
-    private static byte[] readBuffer = new byte[1024]; // 4k的buffer空间,缓存串口读入的数据
-    static Enumeration portList;
-    InputStream inputStream;
-    OutputStream outputStream;
-    static SerialPort serialPort;
-    HashMap serialParams;
-    Thread readThread;// 本来是static类型的
-    // 端口是否打开了
-    boolean isOpen = false;
-    // 端口读入数据事件触发后,等待n毫秒后再读取,以便让数据一次性读完
-    public static final String PARAMS_DELAY = "delay read"; // 延时等待端口数据准备的时间
-    public static final String PARAMS_TIMEOUT = "timeout"; // 超时时间
-    public static final String PARAMS_PORT = "port name"; // 端口名称
-    public static final String PARAMS_DATABITS = "data bits"; // 数据位
-    public static final String PARAMS_STOPBITS = "stop bits"; // 停止位
-    public static final String PARAMS_PARITY = "parity"; // 奇偶校验
-    public static final String PARAMS_RATE = "rate"; // 波特率
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Enumeration;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.TooManyListenersException;
 
-    public boolean isOpen() {
-        return isOpen;
+import javax.print.attribute.standard.PrinterMessageFromOperator;
+
+public class SerialReader implements SerialPortEventListener {
+    protected static CommPortIdentifier portid = null; // 通讯端口标识符
+    protected static SerialPort comPort = null; // 串行端口
+    protected int BAUD = 9600; // 波特率
+    protected int DATABITS = SerialPort.DATABITS_8;; // 数据位
+    protected int STOPBITS = SerialPort.STOPBITS_1; // 停止位
+    protected int PARITY = SerialPort.PARITY_NONE; // 奇偶检验
+    private static OutputStream oStream; // 输出流
+    private static InputStream iStream; // 输入流
+    StringBuilder buf = new StringBuilder(128);
+
+    public static void main(String[] args) {
+        // Timer t = new Timer();
+        // t.schedule(new TimerTask() {
+        // @Override
+        // public void run() {
+        // SerialReader test = new SerialReader();
+        // // 设置串口号
+        // test.setSerialPortNumber();
+        // }
+        // }, 3000, 3000);
+        SerialReader test = new SerialReader();
+        // 设置串口号
+        test.setSerialPortNumber();
     }
 
     /**
-     * 初始化端口操作的参数.
-     * @throws SerialPortException
-     * @see
+     * 读取所有串口名字
      */
-    public SerialReader() {
-        isOpen = false;
+    private void listPortChoices() {
+        CommPortIdentifier portId;
+        Enumeration en = CommPortIdentifier.getPortIdentifiers();
+        while (en.hasMoreElements()) {
+            portId = (CommPortIdentifier) en.nextElement();
+            if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+                System.out.println(portId.getName());
+            }
+        }
     }
 
-    public void open(HashMap params) {
-        serialParams = params;
-        if (isOpen) {
-            close();
-        }
-        try {
-            // 参数初始化
-            int timeout = Integer.parseInt(serialParams.get(PARAMS_TIMEOUT).toString());
-            int rate = Integer.parseInt(serialParams.get(PARAMS_RATE).toString());
-            int dataBits = Integer.parseInt(serialParams.get(PARAMS_DATABITS).toString());
-            int stopBits = Integer.parseInt(serialParams.get(PARAMS_STOPBITS).toString());
-            int parity = Integer.parseInt(serialParams.get(PARAMS_PARITY).toString());
-            delayRead = Integer.parseInt(serialParams.get(PARAMS_DELAY).toString());
-            String port = serialParams.get(PARAMS_PORT).toString();
-            // 打开端口
-            portId = CommPortIdentifier.getPortIdentifier(port);
-            serialPort = (SerialPort) portId.open("SerialReader", timeout);
-            inputStream = serialPort.getInputStream();
-            serialPort.addEventListener(this);
-            serialPort.notifyOnDataAvailable(true);
-            serialPort.setSerialPortParams(rate, dataBits, stopBits, parity);
+    /**
+     * 设置串口号
+     * @param Port
+     * @return
+     */
+    private void setSerialPortNumber() {
 
-            isOpen = true;
+        String osName = null;
+        String osname = System.getProperty("os.name", "").toLowerCase();
+        if (osname.startsWith("windows")) {
+            // windows
+            osName = "COM1";
+        } else if (osname.startsWith("linux")) {
+            // linux
+            osName = "/dev/ttyS1";
+        }
+        System.out.println(osName);
+        try {
+            portid = CommPortIdentifier.getPortIdentifier(osName);
+            if (portid.isCurrentlyOwned()) {
+                System.out.println("端口在使用");
+            } else {
+                comPort = (SerialPort) portid.open(this.getClass().getName(), 1000);
+            }
         } catch (PortInUseException e) {
-            System.out.println("端口" + serialParams.get(PARAMS_PORT).toString() + "已经被占用");
-            // "端口"+serialParams.get( PARAMS_PORT ).toString()+"已经被占用";
+            System.out.println("端口被占用");
+            e.printStackTrace();
+
+        } catch (NoSuchPortException e) {
+            System.out.println("端口不存在");
+            e.printStackTrace();
+        }
+
+        try {
+            iStream = comPort.getInputStream(); // 从COM1获取数据
+            oStream = comPort.getOutputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            comPort.addEventListener(this); // 给当前串口增加一个监听器
+            comPort.notifyOnDataAvailable(true); // 当有数据是通知
         } catch (TooManyListenersException e) {
-            System.out.println("端口" + serialParams.get(PARAMS_PORT).toString() + "监听者过多");
-            // "端口"+serialParams.get( PARAMS_PORT ).toString()+"监听者过多";
+            e.printStackTrace();
+        }
+
+        try {
+            // 设置串口参数依次为(波特率,数据位,停止位,奇偶检验)
+            comPort.setSerialPortParams(this.BAUD, this.DATABITS, this.STOPBITS, this.PARITY);
         } catch (UnsupportedCommOperationException e) {
             System.out.println("端口操作命令不支持");
-            // "端口操作命令不支持";
-        } catch (NoSuchPortException e) {
-            System.out.println("端口" + serialParams.get(PARAMS_PORT).toString() + "不存在");
-            // "端口"+serialParams.get( PARAMS_PORT ).toString()+"不存在";
+            e.printStackTrace();
+        }
+
+        try {
+
+            // # testData
+            String testData = "1";
+            oStream.write(testData.getBytes());
+
+             //iStream.close();
+             //comPort.close();
         } catch (IOException e) {
-            System.out.println("打开端口" + serialParams.get(PARAMS_PORT).toString() + "失败");
-            // "打开端口"+serialParams.get( PARAMS_PORT ).toString()+"失败";
-        }
-        serialParams.clear();
-        Thread readThread = new Thread(this);
-        readThread.start();
-    }
-
-    public void run() {
-        try {
-            Thread.sleep(50);
-        } catch (InterruptedException e) {
-        }
-    }
-
-    public void start() {
-        try {
-            outputStream = serialPort.getOutputStream();
-        } catch (IOException e) {
-        }
-        try {
-            readThread = new Thread(this);
-            readThread.start();
-        } catch (Exception e) {
-        }
-    } // start() end
-
-    public void run(String message) {
-        try {
-            Thread.sleep(4);
-        } catch (InterruptedException e) {
-        }
-        try {
-            if (message != null && message.length() != 0) {
-                System.out.println("run message:" + message);
-                outputStream.write(message.getBytes()); // 往串口发送数据，是双向通讯的。
-            }
-        } catch (IOException e) {
-        }
-    }
-
-    public void close() {
-        if (isOpen) {
-            try {
-                serialPort.notifyOnDataAvailable(false);
-                serialPort.removeEventListener();
-                inputStream.close();
-                serialPort.close();
-                isOpen = false;
-            } catch (IOException ex) {
-                // "关闭串口失败";
-            }
+            e.printStackTrace();
         }
     }
 
     public void serialEvent(SerialPortEvent event) {
-        try {
-            Thread.sleep(delayRead);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         switch (event.getEventType()) {
-            case SerialPortEvent.BI: // 10
-            case SerialPortEvent.OE: // 7
-            case SerialPortEvent.FE: // 9
-            case SerialPortEvent.PE: // 8
-            case SerialPortEvent.CD: // 6
-            case SerialPortEvent.CTS: // 3
-            case SerialPortEvent.DSR: // 4
-            case SerialPortEvent.RI: // 5
-            case SerialPortEvent.OUTPUT_BUFFER_EMPTY: // 2
+            case SerialPortEvent.BI:
+            case SerialPortEvent.OE:
+            case SerialPortEvent.FE:
+            case SerialPortEvent.PE:
+            case SerialPortEvent.CD:
+            case SerialPortEvent.CTS:
+            case SerialPortEvent.DSR:
+            case SerialPortEvent.RI:
+            case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
                 break;
-            case SerialPortEvent.DATA_AVAILABLE: // 1
+            case SerialPortEvent.DATA_AVAILABLE:// 当有可用数据时读取数据,并且给串口返回数据
                 try {
-                    // 多次读取,将所有数据读入
-                    while (inputStream.available() > 0) {
-                        numBytes = inputStream.read(readBuffer);
+                    while (iStream.available() > 0) {
+                        System.out.println("接收数据：" + (char) ((byte) iStream.read()));
                     }
-
-                    // 打印接收到的字节数据的ASCII码
-                    for (int i = 0; i < numBytes; i++) {
-                        // System.out.println("msg[" + numBytes + "]: ["
-                        // +readBuffer[i] + "]:"+(char)readBuffer[i]);
-                    }
-                    // numBytes = inputStream.read( readBuffer );
-                    changeMessage(readBuffer, numBytes);
                 } catch (IOException e) {
-                    e.printStackTrace();
+
                 }
                 break;
         }
-    }
-
-    // 通过observer pattern将收到的数据发送给observer
-    // 将buffer中的空字节删除后再发送更新消息,通知观察者
-    public void changeMessage(byte[] message, int length) {
-        setChanged();
-        byte[] temp = new byte[length];
-        System.arraycopy(message, 0, temp, 0, length);
-        notifyObservers(temp);
-    }
-
-    static void listPorts() {
-        Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
-        while (portEnum.hasMoreElements()) {
-            CommPortIdentifier portIdentifier = (CommPortIdentifier) portEnum.nextElement();
-
-        }
-    }
-
-    public void openSerialPort(String message) {
-        HashMap<String, Comparable> params = new HashMap<String, Comparable>();
-        String port = "COM1";
-        String rate = "9600";
-        String dataBit = "" + SerialPort.DATABITS_8;
-        String stopBit = "" + SerialPort.STOPBITS_1;
-        String parity = "" + SerialPort.PARITY_NONE;
-        int parityInt = SerialPort.PARITY_NONE;
-        params.put(SerialReader.PARAMS_PORT, port); // 端口名称
-        params.put(SerialReader.PARAMS_RATE, rate); // 波特率
-        params.put(SerialReader.PARAMS_DATABITS, dataBit); // 数据位
-        params.put(SerialReader.PARAMS_STOPBITS, stopBit); // 停止位
-        params.put(SerialReader.PARAMS_PARITY, parityInt); // 无奇偶校验
-        params.put(SerialReader.PARAMS_TIMEOUT, 100); // 设备超时时间 1秒
-        params.put(SerialReader.PARAMS_DELAY, 100); // 端口数据准备时间 1秒
-        try {
-            open(params);// 打开串口
-            // LoginFrame cf=new LoginFrame();
-            // addObserver(cf);
-            // 也可以像上面一个通过LoginFrame来绑定串口的通讯输出.
-            if (message != null && message.length() != 0) {
-                String str = "";
-                for (int i = 0; i < 10; i++) {
-                    str += message;
-                }
-                start();
-                run(str);
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    static String getPortTypeName(int portType) {
-        switch (portType) {
-            case CommPortIdentifier.PORT_I2C:
-                return "I2C";
-            case CommPortIdentifier.PORT_PARALLEL:
-                return "Parallel";
-            case CommPortIdentifier.PORT_RAW:
-                return "Raw";
-            case CommPortIdentifier.PORT_RS485:
-                return "RS485";
-            case CommPortIdentifier.PORT_SERIAL:
-                return "Serial";
-            default:
-                return "unknown type";
-        }
-    }
-
-    public HashSet<CommPortIdentifier> getAvailableSerialPorts()// 本来static
-    {
-        HashSet<CommPortIdentifier> h = new HashSet<CommPortIdentifier>();
-        Enumeration thePorts = CommPortIdentifier.getPortIdentifiers();
-        while (thePorts.hasMoreElements()) {
-            CommPortIdentifier com = (CommPortIdentifier) thePorts.nextElement();
-            switch (com.getPortType()) {
-                case CommPortIdentifier.PORT_SERIAL:
-                    try {
-                        CommPort thePort = com.open("CommUtil", 50);
-                        thePort.close();
-                        h.add(com);
-                    } catch (PortInUseException e) {
-                        System.out.println("Port, " + com.getName() + ", is in use.");
-                    } catch (Exception e) {
-                        System.out.println("Failed to open port " + com.getName() + e);
-                    }
-            }
-        }
-        return h;
     }
 }
-
-// ASCII表
-// -------------------------------------------------------------
-// ASCII Characters
-//
-// Dec Hex Char Code Dec Hex Char
-//
-// 0 0 NUL 64 40 @
-// 1 1 SOH 65 41 A
-// 2 2 STX 66 42 B
-// 3 3 ETX 67 43 C
-// 4 4 EOT 68 44 D
-// 5 5 ENQ 69 45 E
-// 6 6 ACK 70 46 F
-// 7 7 BEL 71 47 G
-// 8 8 BS 72 48 H
-// 9 9 HT 73 49 I
-// 10 0A LF 74 4A J
-// 11 0B VT 75 4B K
-// 12 0C FF 76 4C L
-// 13 0D CR 77 4D M
-// 14 0E SO 78 4E N
-// 15 0F SI 79 4F O
-// 16 10 SLE 80 50 P
-// 17 11 CS1 81 51 Q
-// 18 12 DC2 82 52 R
-// 19 13 DC3 83 53 S
-// 20 14 DC4 84 54 T
-// 21 15 NAK 85 55 U
-// 22 16 SYN 86 56 V
-// 23 17 ETB 87 57 W
-// 24 18 CAN 88 58 X
-// 25 19 EM 89 59 Y
-// 26 1A SIB 90 5A Z
-// 27 1B ESC 91 5B [
-// 92 5C \
-// 28 1C FS 93 5D ]
-// 29 1D GS 94 5E ^
-// 30 1E RS 95 5F _
-// 31 1F US 96 60 `
-// 32 20 (space) 97 61 a
-// 33 21 ! 98 62 b
-// 34 22 "
-// 99 63 c
-// 35 23 # 100 64 d
-// 36 24 $
-// 37 25 % 101 65 e
-// 38 26 & 102 66 f
-// 39 27 ' 103 67 g
-// 40 28 ( 104 68 h
-// 41 29 ) 105 69 i
-// 42 2A * 106 6A j
-// 43 2B + 107 6B k
-// 44 2C , 108 6C l
-// 45 2D - 109 6D m
-// 46 2E . 110 6E n
-// 47 2F / 111 6F o
-// 48 30 0 112 70 p
-// 49 31 1 113 72 q
-// 50 32 2 114 72 r
-// 51 33 3 115 73 s
-// 52 34 4 116 74 t
-// 53 35 5 117 75 u
-// 54 36 6 118 76 v
-// 55 37 7 119 77 w
-// 56 38 8 120 78 x
-// 57 39 9 121 79 y
-// 58 3A : 122 7A z
-// 59 3B ; 123 7B {
-// 60 3C < 124 7C |
-// 61 3D = 125 7D }
-// 62 3E > 126 7E ~
-// 63 3F ? 127 7F

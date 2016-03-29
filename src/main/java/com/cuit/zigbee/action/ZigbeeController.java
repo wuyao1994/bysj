@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cuit.web.util.RequestSessionUtil;
 import com.cuit.zigbee.main.Test;
+import com.cuit.zigbee.util.SerialReader;
 
 @Controller
 @RequestMapping(value = "/zigbee")

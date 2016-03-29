@@ -25,6 +25,9 @@
         </tr>
     </table>
     <script type="text/javascript">
+    $(function() {
+        
+    });
     function led1() {
         if(document.getElementById("led1").innerHTML == "ON") {
             document.getElementById("led1").innerHTML="OFF";
