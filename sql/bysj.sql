@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2016-03-08 09:49:56
+Date: 2016-04-01 17:04:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,7 +42,7 @@ INSERT INTO `admin_menu_info` VALUES ('3', '系统用户', '/admin/system/viewAd
 INSERT INTO `admin_menu_info` VALUES ('4', '监测服务', null, '1', null, '2016-02-26 14:03:00', null, '1', '1', 'service');
 INSERT INTO `admin_menu_info` VALUES ('5', '系统菜单', '/admin/system/viewAdminMenus', '1', '1', '2016-02-26 14:03:32', null, '2', '3', 'system');
 INSERT INTO `admin_menu_info` VALUES ('6', '系统角色', '/admin/system/viewAdminRoles', '1', '1', '2016-02-26 14:04:40', null, '2', '4', 'system');
-INSERT INTO `admin_menu_info` VALUES ('7', '节点监测', null, '1', '4', '2016-03-03 10:42:16', null, '2', '1', 'service');
+INSERT INTO `admin_menu_info` VALUES ('7', '节点监测', '/zigbee/viewSensorMonitor', '1', '4', '2016-03-03 10:42:16', '2016-03-10 13:36:55', '2', '1', 'service');
 
 -- ----------------------------
 -- Table structure for admin_role_info
@@ -129,6 +129,29 @@ CREATE TABLE `admin_user_role_relation` (
 -- ----------------------------
 INSERT INTO `admin_user_role_relation` VALUES ('1', '1');
 INSERT INTO `admin_user_role_relation` VALUES ('2', '2');
+
+-- ----------------------------
+-- Table structure for sensor_data_info
+-- ----------------------------
+DROP TABLE IF EXISTS `sensor_data_info`;
+CREATE TABLE `sensor_data_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `statu` int(11) DEFAULT NULL,
+  `light_data` double DEFAULT NULL,
+  `temperature_data` double DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sensor_data_info
+-- ----------------------------
+INSERT INTO `sensor_data_info` VALUES ('1', 'led1', '0', '25.3', '33.33', '2016-04-01 10:21:49', '2016-04-01 16:27:11');
+INSERT INTO `sensor_data_info` VALUES ('2', 'led2', '1', '24.3', '22.22', '2016-04-01 10:21:52', '2016-04-01 16:19:46');
+INSERT INTO `sensor_data_info` VALUES ('3', 'led3', '1', '26.3', '23.22', '2016-04-01 10:21:54', '2016-04-01 16:19:47');
+INSERT INTO `sensor_data_info` VALUES ('4', 'led4', '0', '24.3', '24.2', '2016-04-01 10:21:57', '2016-04-01 14:46:25');
 
 -- ----------------------------
 -- View structure for admin_role_menu_grant_view

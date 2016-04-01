@@ -5,10 +5,10 @@
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="statu" column="statu"/>
-        <result property="lightDate" column="lightDate"/>
-        <result property="temperatureDate" column="temperatureDate"/>
-        <result property="createTime" column="createTime"/>
-        <result property="updateTime" column="updateTime"/>
+        <result property="lightData" column="light_data"/>
+        <result property="temperatureData" column="temperature_data"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
     <update id="updateSensorDataInfo" parameterType="sensorInfo">
         <![CDATA[

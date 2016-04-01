@@ -6,10 +6,10 @@ public class SensorInfo {
     private int id;
     private String name;
     private int statu;
-    private float light;
-    private float temperature;
+    private double lightData;
+    private double temperatureData;
     private Date createTime;
-    private Date updatetime;
+    private Date updateTime;
 
     public int getId() {
         return id;
@@ -35,20 +35,20 @@ public class SensorInfo {
         this.statu = statu;
     }
 
-    public float getLight() {
-        return light;
+    public double getLightData() {
+        return lightData;
     }
 
-    public void setLight(float light) {
-        this.light = light;
+    public void setLightData(double lightData) {
+        this.lightData = lightData;
     }
 
-    public float getTemperature() {
-        return temperature;
+    public double getTemperatureData() {
+        return temperatureData;
     }
 
-    public void setTemperature(float temperature) {
-        this.temperature = temperature;
+    public void setTemperatureData(double temperatureData) {
+        this.temperatureData = temperatureData;
     }
 
     public Date getCreateTime() {
@@ -59,12 +59,12 @@ public class SensorInfo {
         this.createTime = createTime;
     }
 
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
 }

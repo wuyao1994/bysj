@@ -45,7 +45,7 @@
     <script type="text/javascript">
         $(function() {
             var result = "${result}";
-            if (result != "") {
+            if (result == "fail") {
                 $("#message").html("用户不存在或密码错误！");
             }
             if($.cookie('username')){

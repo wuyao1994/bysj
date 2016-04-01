@@ -10,24 +10,31 @@
 <title>节点监测</title>
 </head>
 <body class="viewZigbee">
-    <table>
-        <tr>
-            <td><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="pic1"> <span>终端节点1</span><span>光照</span>
-                <button class="btn btn-default" id = "led1" type="submit" onclick="led1()">ON</button></td>
-            <td><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="pic2"> <span>终端节点2</span><span>光照</span>
-                <button class="btn btn-default" id = "led2" type="submit" onclick="led2()">ON</button></td>
-        </tr>
-        <tr>
-            <td><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="pic3"> <span>终端节点3</span><span>光照</span>
-                <button class="btn btn-default" id = "led3" type="submit"onclick="led3()">ON</button></td>
-            <td><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="pic4"> <span>终端节点4</span><span>光照</span>
-                <button class="btn btn-default" id = "led4" type="submit"onclick="led4()">ON</button></td>
-        </tr>
+    <table id="left-nav">
     </table>
     <script type="text/javascript">
     $(function() {
-        
-    });
+        $.post('/zigbee/getSensorInfoList', [],function(data, status) {
+            var picname = "pic";
+            var htmlinit="";
+            for (i = 0; i< data.length; i++) {
+                if (i%2 == 0) {
+                    htmlinit += '<tr>';
+                }
+                picname = picname+data[i].id;
+                if (data[i].statu == 1) {
+                    htmlinit += '<td><img src="/resources/images/zigbee/icon_lamp_ON.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br><button class="btn btn-default" id = "'+data[i].name+ '" type="submit" onclick="'+data[i].name+'()">OFF</button></td>';
+                } else {
+                    htmlinit += '<td><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br><button class="btn btn-default" id = "'+data[i].name+ '" type="submit" onclick="'+data[i].name+'()">ON</button></td>';
+                }
+                if (i%2 == 1) {
+                    htmlinit += '</tr>';
+                }
+                picname = "pic";
+            }
+            $('#left-nav').html(htmlinit);
+        });
+    })
     function led1() {
         if(document.getElementById("led1").innerHTML == "ON") {
             document.getElementById("led1").innerHTML="OFF";
@@ -87,6 +94,30 @@
             var imgObj = document.getElementById("pic4");
             imgObj.src="/resources/images/zigbee/icon_lamp_OFF.jpg";
         }
+    }
+    setTimeout(reload(),5000);
+    function reload() {
+        $.post('/zigbee/getSensorInfoList', [],function(data, status) {
+            var picname = "pic";
+            var htmlinit="";
+            for (i = 0; i< data.length; i++) {
+                if (i%2 == 0) {
+                    htmlinit += '<tr>';
+                }
+                picname = picname+data[i].id;
+                if (data[i].statu == 1) {
+                    htmlinit += '<td><img src="/resources/images/zigbee/icon_lamp_ON.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br><button class="btn btn-default" id = "'+data[i].name+ '" type="submit" onclick="'+data[i].name+'()">OFF</button></td>';
+                } else {
+                    htmlinit += '<td><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br><button class="btn btn-default" id = "'+data[i].name+ '" type="submit" onclick="'+data[i].name+'()">ON</button></td>';
+                }
+                if (i%2 == 1) {
+                    htmlinit += '</tr>';
+                }
+                picname = "pic";
+            }
+            $('#left-nav').html(htmlinit);
+            setTimeout(reload(),5000);
+        });
     }
     </script>
 </body>

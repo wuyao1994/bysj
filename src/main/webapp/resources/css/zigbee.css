@@ -11,10 +11,12 @@
 }
 
 .viewZigbee table tr td span {
-    margin-left: 160px;
+    margin-left: 130px;
     text-align: center;
 }
-
+.viewZigbee table tr td button {
+    margin-left: 290px;
+}
 .viewZigbee table tr td img {
     display: block;
     height: auto;
