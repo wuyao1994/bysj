@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cuit.zigbee.dao.ZigbeeManageDao">
+    <resultMap type="sensorInfo" id="sensorInfoMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="statu" column="statu"/>
+        <result property="lightDate" column="lightDate"/>
+        <result property="temperatureDate" column="temperatureDate"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+    <update id="updateSensorDataInfo" parameterType="sensorInfo">
+        <![CDATA[
+            update sensor_data_info
+            set light_data = #{lightData},
+            temperature_data = #{temperatureData},
+            update_time = NOW()
+            where id = #{id}
+        ]]>
+    </update>
+    <update id="updateSensorStatuInfo" parameterType="sensorInfo">
+        <![CDATA[
+            update sensor_data_info
+            set statu = #{statu},
+            update_time = NOW()
+            where id = #{id}
+        ]]>
+    </update>
+    <select id="getSensorInfoList" resultMap="sensorInfoMap">
+        <![CDATA[
+            select * from sensor_data_info
+        ]]>
+    </select>
+</mapper>

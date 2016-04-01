@@ -17,5 +17,6 @@
         <typeAlias type="com.cuit.admin.bean.AdminInfo" alias="adminBean" />
         <typeAlias type="com.cuit.admin.bean.AdminMenu" alias="adminMenu" />
         <typeAlias type="com.cuit.admin.bean.AdminRole" alias="adminRole" />
+        <typeAlias type="com.cuit.zigbee.bean.SensorInfo" alias="sensorInfo" />
     </typeAliases>
 </configuration>

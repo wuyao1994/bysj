@@ -35,7 +35,7 @@
         <!-- 扫描自动生成的xml文件 --><!-- Mybatis XML映射文件 -->
         <property name="mapperLocations">
             <list>
-                <value>classpath*:com/cuit/admin/dao/sql/*Mapper.xml</value>
+                <value>classpath*:com/cuit/*/dao/sql/*Mapper.xml</value>
             </list>
         </property>
     <property name="plugins">
@@ -44,7 +44,7 @@
     </bean>
     
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.cuit.admin.dao" />
+        <property name="basePackage" value="com.cuit.*.dao" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
     
