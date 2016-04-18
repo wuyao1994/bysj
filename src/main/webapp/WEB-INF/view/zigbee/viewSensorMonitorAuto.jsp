@@ -57,8 +57,8 @@
                 picname = "pic";
             }
             $('#left-nav').html(htmlinit);
-            setTimeout('reload()',1000);
         });
+        setTimeout('reload()',1000);
     }
     </script>
 </body>
