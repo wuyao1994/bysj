@@ -36,7 +36,7 @@
         });
     })
 
-    setTimeout(reload(),5000);
+    setTimeout('reload()',1000);
     function reload() {
         $.post('/zigbee/getSensorInfoList', [],function(data, status) {
             var picname = "pic";
@@ -57,7 +57,7 @@
                 picname = "pic";
             }
             $('#left-nav').html(htmlinit);
-            setTimeout(reload(),5000);
+            setTimeout('reload()',1000);
         });
     }
     </script>

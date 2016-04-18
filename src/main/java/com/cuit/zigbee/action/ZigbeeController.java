@@ -17,13 +17,13 @@ import com.cuit.web.util.RequestSessionUtil;
 import com.cuit.zigbee.bean.SensorInfo;
 import com.cuit.zigbee.main.Test;
 import com.cuit.zigbee.service.ZigbeeManageSer;
-import com.cuit.zigbee.util.SerialReader;
 
 @Controller
 @RequestMapping(value = "/zigbee")
 public class ZigbeeController {
     @Autowired
     ZigbeeManageSer zigbeeManageser;
+    Test test = new Test();
 
     /**
      * 页面跳转，将参数传递到页面解析
@@ -39,18 +39,18 @@ public class ZigbeeController {
 
     @RequestMapping(value = "/changeStatu", method = RequestMethod.POST)
     public void LightNoOrOff(HttpServletRequest request, @RequestParam("id") int id, @RequestParam("statu") int statu) {
-        String message = id + "&" + statu;
+        String message = "&" + id + ";" + statu + "$";
         SensorInfo sensorinfo = new SensorInfo();
         sensorinfo.setId(id);
         sensorinfo.setStatu(statu);
+
         try {
             zigbeeManageser.updateSensorStatuInfo(sensorinfo);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Test test = new Test();
-        test.openSerialPort(message);
-        test.close();
+
+        test.send(message);
     }
 
     @RequestMapping(value = "/getSensorInfoList", method = RequestMethod.POST)
@@ -62,6 +62,7 @@ public class ZigbeeController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        test.openSerialPort();
         return sensorinfo;
     }
 

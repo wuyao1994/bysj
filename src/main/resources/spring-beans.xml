@@ -18,6 +18,8 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:jdbc.properties" />
     </bean>
+    <bean id="SerialWrite" class="com.cuit.zigbee.util.SerialWrite"></bean>
+    
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="${driver}" />
         <property name="jdbcUrl" value="${url}" />

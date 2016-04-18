@@ -14,6 +14,7 @@
         <![CDATA[
             update sensor_data_info
             set light_data = #{lightData},
+            statu = #{statu},
             temperature_data = #{temperatureData},
             update_time = NOW()
             where id = #{id}

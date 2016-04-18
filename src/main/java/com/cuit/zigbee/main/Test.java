@@ -4,21 +4,22 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.cuit.zigbee.service.ZigbeeManageSer;
 import com.cuit.zigbee.util.SerialWrite;
 
 import gnu.io.SerialPort;
 
 public class Test implements Observer {
+    
     SerialWrite sr = new SerialWrite();
-    public static void main(String args[]) {
-        Test test = new Test();
-        test.send("192.168.10.10");
-    }
+
     public void update(Observable o, Object arg) {
         String mt = new String((byte[]) arg);
         System.out.println("---" + mt); // 串口数据
     }
-
+    
     /**
      * 关闭串口
      */
@@ -31,18 +32,19 @@ public class Test implements Observer {
      * @param string message
      */
     public void send(String message) {
-        Test test = new Test();
-        test.openSerialPort(message);
+        if (message != null && message.length() != 0) {
+            sr.start();
+            sr.run(message);
+        }
     }
 
     /**
      * 打开串口
-     * @param String message
      */
-    public void openSerialPort(String message) {
+    public void openSerialPort() {
         HashMap<String, Comparable> params = new HashMap<String, Comparable>();
-        String port = "COM1";
-        String rate = "9600";
+        String port = "COM11";
+        String rate = "115200";
         String dataBit = "" + SerialPort.DATABITS_8;
         String stopBit = "" + SerialPort.STOPBITS_1;
         String parity = "" + SerialPort.PARITY_NONE;
@@ -56,11 +58,6 @@ public class Test implements Observer {
         params.put(SerialWrite.PARAMS_DELAY, 100); // 端口数据准备时间 1秒
         try {
             sr.open(params);
-//            sr.addObserver(this);
-            if (message != null && message.length() != 0) {
-                sr.start();
-                sr.run(message);
-            }
         } catch (Exception e) {
         }
     }

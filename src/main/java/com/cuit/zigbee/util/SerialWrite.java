@@ -9,6 +9,14 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.TooManyListenersException;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.cuit.zigbee.bean.SensorInfo;
+import com.cuit.zigbee.service.ZigbeeManageSer;
+
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
@@ -18,7 +26,11 @@ import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException;
 
+@Component
 public class SerialWrite extends Observable implements Runnable, SerialPortEventListener {
+    @Autowired
+    private ZigbeeManageSer zigbeeManageser;
+    private static SerialWrite SerialWrite;
     static CommPortIdentifier portId;
     int delayRead = 100;
     int numBytes;
@@ -39,6 +51,21 @@ public class SerialWrite extends Observable implements Runnable, SerialPortEvent
     public static final String PARAMS_STOPBITS = "stop bits"; // 停止位
     public static final String PARAMS_PARITY = "parity"; // 奇偶校验
     public static final String PARAMS_RATE = "rate"; // 波特率
+
+    public ZigbeeManageSer getZigbeeManageser() {
+        return zigbeeManageser;
+    }
+
+    public void setZigbeeManageser(ZigbeeManageSer zigbeeManageser) {
+        this.zigbeeManageser = zigbeeManageser;
+    }
+
+    @PostConstruct
+    public void init() {
+        SerialWrite = this;
+        SerialWrite.zigbeeManageser = this.zigbeeManageser;
+
+    }
 
     public boolean isOpen() {
         return isOpen;
@@ -175,13 +202,29 @@ public class SerialWrite extends Observable implements Runnable, SerialPortEvent
                     while (inputStream.available() > 0) {
                         numBytes = inputStream.read(readBuffer);
                     }
+                    if (numBytes == 12) {
+                        SensorInfo sensor = new SensorInfo();
+                        int id = readBuffer[1] - 48;
+                        int statu = readBuffer[3] - 48;
+                        int light = (readBuffer[9] - 48) * 10 + (readBuffer[10] - 48);
+                        int temp = (readBuffer[5] - 48) * 10 + (readBuffer[6] - 48);
+                        System.out.println(id + "," + temp + "," + light);
+                        sensor.setId(id);
+                        sensor.setTemperatureData(temp);
+                        sensor.setLightData(light);
+                        sensor.setStatu(statu);
+                        System.out.println("------------");
+                        for (int i = 0; i < numBytes; i++) {
+                            System.out.println("msg[" + numBytes + "]: [" + readBuffer[i] + "]:" + (char) readBuffer[i]);
+                        }
+                        try {
+                            SerialWrite.zigbeeManageser.updateSensorDataInfo(sensor);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-                    // 打印接收到的字节数据的ASCII码
-                    for (int i = 0; i < numBytes; i++) {
-                        System.out.println("msg[" + numBytes + "]: [" + readBuffer[i] + "]:" + (char) readBuffer[i]);
+                        changeMessage(readBuffer, numBytes);
                     }
-                    // numBytes = inputStream.read( readBuffer );
-                    changeMessage(readBuffer, numBytes);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -193,7 +236,7 @@ public class SerialWrite extends Observable implements Runnable, SerialPortEvent
     public void openSerialPort(String message) {
         HashMap<String, Comparable> params = new HashMap<String, Comparable>();
         String port = "COM1";
-        String rate = "9600";
+        String rate = "115200";
         String dataBit = "" + SerialPort.DATABITS_8;
         String stopBit = "" + SerialPort.STOPBITS_1;
         String parity = "" + SerialPort.PARITY_NONE;
