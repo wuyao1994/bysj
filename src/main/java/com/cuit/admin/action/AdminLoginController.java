@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cuit.web.util.RequestSessionUtil;
 
 @Controller
-@RequestMapping(value="/admin")
+@RequestMapping(value = "/admin")
 public class AdminLoginController {
     /**
      * 页面跳转，将参数传递到页面解析

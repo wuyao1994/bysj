@@ -43,7 +43,7 @@
     </bean>
     <mvc:resources mapping="/resources/**" location="/resources/" />
     <!-- 默认首页 -->
-    <mvc:view-controller path="/" view-name="/admin/login" />
+    <mvc:view-controller path="/" view-name="/admin/index" />
     <mvc:view-controller path="/admin" view-name="/admin/login" />
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="utf-8" />

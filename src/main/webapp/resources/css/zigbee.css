@@ -1,25 +1,16 @@
 @CHARSET "UTF-8";
 
-.viewZigbee {
-    width: 1300px;
-    height: 400px
-}
-
-.viewZigbee table tr td {
-    width: 650px;
-    height: 200px
-}
-
 .viewZigbee table tr td span {
-    margin-left: 130px;
+    margin-left: 20%;
     text-align: center;
+    color:green;
 }
 .viewZigbee table tr td button {
-    margin-left: 290px;
+    margin-left: 45%;
 }
 .viewZigbee table tr td img {
     display: block;
     height: auto;
-    margin: 10px auto;
-    width: 50%;
+    margin:auto 30%;
+    width: 40%;
 }

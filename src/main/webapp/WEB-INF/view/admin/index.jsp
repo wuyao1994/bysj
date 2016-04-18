@@ -11,7 +11,7 @@
 <script src="/resources/scripts/jquery.cookie.js"></script>
 </head>
 <body background="/resources/images/icon1.jpg" style="text-align: center;">
-    <h1 style="color: white;">基于zigbee的能楼宇电力节能管理系统</h1>
+    <h1 style="color: white;">基于zigbee的智能楼宇电力节能管理系统</h1>
     <form class="form-horizontal" style="color: white; margin-top: 200px;" action="/admin/login" method="post">
         <div class="form-group col-sm-9">
             <label for="j_username" class="col-sm-2 control-label col-sm-offset-5">Username</label>

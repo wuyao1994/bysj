@@ -187,7 +187,7 @@ public class SystemManageCtroller {
             } else {
                 this.systemManageSer.updateAdminMenu(adminMenu);
             }
-//            this.mySecurityMetadataSource.loadResourceDefine();
+            // this.mySecurityMetadataSource.loadResourceDefine();
         } catch (Exception e) {
             e.printStackTrace();
             result.setCode(1000);
