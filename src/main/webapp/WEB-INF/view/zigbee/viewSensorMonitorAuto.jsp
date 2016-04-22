@@ -23,9 +23,9 @@
                 }
                 picname = picname+data[i].id;
                 if (data[i].statu == 1) {
-                    htmlinit += '<td><img src="/resources/images/zigbee/icon_lamp_ON.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br></td>';
+                    htmlinit += '<td><span>'+data[i].name2+'</span><img src="/resources/images/zigbee/icon_lamp_ON.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br></td>';
                 } else {
-                    htmlinit += '<td><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br></td>';
+                    htmlinit += '<td><span>'+data[i].name2+'</span><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br></td>';
                 }
                 if (i%2 == 1) {
                     htmlinit += '</tr>';
@@ -47,9 +47,9 @@
                 }
                 picname = picname+data[i].id;
                 if (data[i].statu == 1) {
-                    htmlinit += '<td><img src="/resources/images/zigbee/icon_lamp_ON.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br></td>';
+                    htmlinit += '<td><span>'+data[i].name2+'</span><img src="/resources/images/zigbee/icon_lamp_ON.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br></td>';
                 } else {
-                    htmlinit += '<td><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br></td>';
+                    htmlinit += '<td><span>'+data[i].name2+'</span><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br></td>';
                 }
                 if (i%2 == 1) {
                     htmlinit += '</tr>';

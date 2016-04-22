@@ -5,6 +5,7 @@ import java.util.Date;
 public class SensorInfo {
     private int id;
     private String name;
+    private String name2;
     private int statu;
     private double lightData;
     private double temperatureData;
@@ -25,6 +26,14 @@ public class SensorInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName2() {
+        return name2;
+    }
+
+    public void setName2(String name2) {
+        this.name2 = name2;
     }
 
     public int getStatu() {

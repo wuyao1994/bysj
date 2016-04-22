@@ -202,12 +202,12 @@ public class SerialWrite extends Observable implements Runnable, SerialPortEvent
                     while (inputStream.available() > 0) {
                         numBytes = inputStream.read(readBuffer);
                     }
-                    if (numBytes == 12) {
+                    if (numBytes == 32) {
                         SensorInfo sensor = new SensorInfo();
-                        int id = readBuffer[1] - 48;
+                        int id = readBuffer[2] - 48;
                         int statu = readBuffer[3] - 48;
-                        int light = (readBuffer[9] - 48) * 10 + (readBuffer[10] - 48);
-                        int temp = (readBuffer[5] - 48) * 10 + (readBuffer[6] - 48);
+                        int light = (readBuffer[20] - 48) * 10 + (readBuffer[21] - 48);
+                        int temp = (readBuffer[16] - 48) * 10 + (readBuffer[17] - 48);
                         System.out.println(id + "," + temp + "," + light);
                         sensor.setId(id);
                         sensor.setTemperatureData(temp);
@@ -235,8 +235,8 @@ public class SerialWrite extends Observable implements Runnable, SerialPortEvent
     /* 发送数据 */
     public void openSerialPort(String message) {
         HashMap<String, Comparable> params = new HashMap<String, Comparable>();
-        String port = "COM1";
-        String rate = "115200";
+        String port = "COM11";
+        String rate = "38400";
         String dataBit = "" + SerialPort.DATABITS_8;
         String stopBit = "" + SerialPort.STOPBITS_1;
         String parity = "" + SerialPort.PARITY_NONE;

@@ -23,9 +23,9 @@
                 }
                 picname = picname+data[i].id;
                 if (data[i].statu == 1) {
-                    htmlinit += '<td><img src="/resources/images/zigbee/icon_lamp_ON.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br><button class="btn btn-default" id = "'+data[i].name+ '" type="submit" onclick="'+data[i].name+'()">OFF</button></td>';
+                    htmlinit += '<td><span>'+data[i].name2+'</span><img src="/resources/images/zigbee/icon_lamp_ON.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br><button class="btn btn-default" id = "'+data[i].name+ '" type="submit" onclick="'+data[i].name+'()">OFF</button></td>';
                 } else {
-                    htmlinit += '<td><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br><button class="btn btn-default" id = "'+data[i].name+ '" type="submit" onclick="'+data[i].name+'()">ON</button></td>';
+                    htmlinit += '<td><span>'+data[i].name2+'</span><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br><button class="btn btn-default" id = "'+data[i].name+ '" type="submit" onclick="'+data[i].name+'()">ON</button></td>';
                 }
                 if (i%2 == 1) {
                     htmlinit += '</tr>';
@@ -106,9 +106,9 @@
                 }
                 picname = picname+data[i].id;
                 if (data[i].statu == 1) {
-                    htmlinit += '<td><img src="/resources/images/zigbee/icon_lamp_ON.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br><button class="btn btn-default" id = "'+data[i].name+ '" type="submit" onclick="'+data[i].name+'()">OFF</button></td>';
+                    htmlinit += '<td><span>'+data[i].name2+'</span><img src="/resources/images/zigbee/icon_lamp_ON.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br><button class="btn btn-default" id = "'+data[i].name+ '" type="submit" onclick="'+data[i].name+'()">OFF</button></td>';
                 } else {
-                    htmlinit += '<td><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br><button class="btn btn-default" id = "'+data[i].name+ '" type="submit" onclick="'+data[i].name+'()">ON</button></td>';
+                    htmlinit += '<td><span>'+data[i].name2+'</span><img src="/resources/images/zigbee/icon_lamp_OFF.jpg" id="'+picname+'"><span>'+data[i].name+'</span><span>光照:'+data[i].lightData+'</span><span>温度:'+data[i].temperatureData+'</span><br><button class="btn btn-default" id = "'+data[i].name+ '" type="submit" onclick="'+data[i].name+'()">ON</button></td>';
                 }
                 if (i%2 == 1) {
                     htmlinit += '</tr>';

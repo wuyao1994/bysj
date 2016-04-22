@@ -44,7 +44,7 @@ public class Test implements Observer {
     public void openSerialPort() {
         HashMap<String, Comparable> params = new HashMap<String, Comparable>();
         String port = "COM11";
-        String rate = "115200";
+        String rate = "38400";
         String dataBit = "" + SerialPort.DATABITS_8;
         String stopBit = "" + SerialPort.STOPBITS_1;
         String parity = "" + SerialPort.PARITY_NONE;

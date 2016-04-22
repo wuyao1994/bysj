@@ -4,6 +4,7 @@
     <resultMap type="sensorInfo" id="sensorInfoMap">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
+        <result property="name2" column="name2"/>
         <result property="statu" column="statu"/>
         <result property="lightData" column="light_data"/>
         <result property="temperatureData" column="temperature_data"/>

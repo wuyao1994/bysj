@@ -39,7 +39,7 @@ public class ZigbeeController {
 
     @RequestMapping(value = "/changeStatu", method = RequestMethod.POST)
     public void LightNoOrOff(HttpServletRequest request, @RequestParam("id") int id, @RequestParam("statu") int statu) {
-        String message = "&" + id + ";" + statu + "$";
+        String message = "&" +"BBB1122222222" + statu + id + "333333333333334*";
         SensorInfo sensorinfo = new SensorInfo();
         sensorinfo.setId(id);
         sensorinfo.setStatu(statu);
