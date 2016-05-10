@@ -63,7 +63,7 @@
     }
     setTimeout('changemode()',500);
     function changemode() {
-        $.post('/zigbee/changeStatu?id=9&statu=1');
+        $.post('/zigbee/changemode?mode=1');
     }
     </script>
 </body>

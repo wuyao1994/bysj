@@ -39,12 +39,7 @@ public class ZigbeeController {
 
     @RequestMapping(value = "/changeStatu", method = RequestMethod.POST)
     public void LightNoOrOff(HttpServletRequest request, @RequestParam("id") int id, @RequestParam("statu") int statu) {
-        String message = null;
-        if (id == 9) {
-            message = "&" + "AAA1122222222" + statu + id + "333333333333334*";
-        } else {
-            message = "&" + "BBB1122222222" + statu + id + "333333333333334*";
-        }
+        String message = "&" + "BBB1122222222" + statu + id + "333333333333334*";
         SensorInfo sensorinfo = new SensorInfo();
         sensorinfo.setId(id);
         sensorinfo.setStatu(statu);
@@ -71,4 +66,9 @@ public class ZigbeeController {
         return sensorinfo;
     }
 
+    @RequestMapping(value = "/changemode", method = RequestMethod.POST)
+    public void changeMode(HttpServletRequest request, @RequestParam("mode") int mode) {
+        String message = "&" + "AAA1122222222" + mode + "3333333333333334*";
+        test.send(message);
+    }
 }

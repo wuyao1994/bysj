@@ -123,7 +123,7 @@
     
     setTimeout('changemode()',1000);
     function changemode() {
-        $.post('/zigbee/changeStatu?id=9&statu=0');
+        $.post('/zigbee/changemode?mode=0');
     }
     </script>
 </body>
