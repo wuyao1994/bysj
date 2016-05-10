@@ -8,6 +8,7 @@
 <script src="/resources/scripts/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/resources/css/zigbee.css" />
 <title>节点监测</title>
+<!-- 自动模式 -->
 </head>
 <body class="viewZigbee">
     <table id="left-nav">
@@ -59,6 +60,10 @@
             $('#left-nav').html(htmlinit);
         });
         setTimeout('reload()',1000);
+    }
+    setTimeout('changemode()',500);
+    function changemode() {
+        $.post('/zigbee/changeStatu?id=9&statu=1');
     }
     </script>
 </body>
